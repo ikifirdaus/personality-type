@@ -8,7 +8,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { Input } from "@/components/dashboard/ui/Input/Input";
 import Link from "next/link";
-import { Eye, EyeOff } from "lucide-react"; // <<< Import icon dari lucide-react
+import { Eye, EyeOff } from "lucide-react";
 
 const signinSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -21,6 +21,7 @@ export default function SignIn() {
   const router = useRouter();
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -32,6 +33,7 @@ export default function SignIn() {
 
   const onSubmit = async (data: SignInFormData) => {
     setError("");
+    setIsLoading(true);
 
     const res = await signIn("credentials", {
       redirect: false,
@@ -41,6 +43,7 @@ export default function SignIn() {
 
     if (res?.error) {
       setError(res.error);
+      setIsLoading(false); // Stop spinner on error
       return;
     }
 
@@ -104,9 +107,13 @@ export default function SignIn() {
 
           <button
             type="submit"
-            className="text-sm w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"
+            className="text-sm w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isLoading}
           >
-            Sign In
+            {isLoading && (
+              <div className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+            )}
+            {isLoading ? "Signing In..." : "Sign In"}
           </button>
         </form>
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
@@ -76,6 +76,7 @@ export const Navbar = () => {
                 onClick={toggleDropdown}
                 className="flex items-center text-gray-700 hover:text-indigo-600 space-x-2"
               >
+                <User className="w-5 h-5" />
                 <span>{session.user.name}</span>
                 <ChevronDown size={16} />
               </button>

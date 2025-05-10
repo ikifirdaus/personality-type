@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Input } from "@/components/dashboard/ui/Input/Input";
 import Link from "next/link";
-import { Eye, EyeOff } from "lucide-react"; // <<< Import Eye & EyeOff dari lucide-react
+import { Eye, EyeOff } from "lucide-react";
 
 const registerSchema = z
   .object({
@@ -26,8 +26,9 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 export default function Register() {
   const router = useRouter();
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // <<< State untuk password
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // <<< State untuk confirm password
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -39,6 +40,7 @@ export default function Register() {
 
   const onSubmit = async (data: RegisterFormData) => {
     setError("");
+    setIsLoading(true);
 
     const res = await fetch("/api/register", {
       method: "POST",
@@ -46,9 +48,11 @@ export default function Register() {
       body: JSON.stringify(data),
     });
 
+    const result = await res.json();
+
     if (!res.ok) {
-      const result = await res.json();
       setError(result.error || "Something went wrong");
+      setIsLoading(false);
       return;
     }
 
@@ -158,9 +162,13 @@ export default function Register() {
 
           <button
             type="submit"
-            className="text-sm w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"
+            disabled={isLoading}
+            className="text-sm w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Register
+            {isLoading && (
+              <div className="w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+            )}
+            {isLoading ? "Registering..." : "Register"}
           </button>
         </form>
 
