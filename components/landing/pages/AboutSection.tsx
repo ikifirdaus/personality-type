@@ -2,7 +2,7 @@ import React from "react";
 export const AboutSection = () => {
   return (
     <section id="what-is-njpt" className="py-16 bg-white w-full">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 md:px-12">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800">
           Apa Itu Neuroscience Jungian Personality Type (NJPT)?
         </h2>

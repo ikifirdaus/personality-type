@@ -4,7 +4,7 @@ import Button from "../ui/Button/Button";
 export const HeroSection = () => {
   return (
     <section className="w-full bg-gradient-to-r from-indigo-100 via-purple-50 to-blue-50 py-20">
-      <div className="container mx-auto px-6 flex flex-col lg:flex-row items-center">
+      <div className="container mx-auto px-6 md:px-12 flex flex-col lg:flex-row items-center">
         <div className="lg:w-1/2 mb-10 lg:mb-0">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
             Temukan Karakter Otentikmu Melalui Neuroscience & Jungian

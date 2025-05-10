@@ -2,7 +2,7 @@
 export const ArchetypesSection = () => {
   return (
     <section className="py-16 bg-white w-full">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 md:px-12">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800">
           Arketipe & Fungsi Kognitif
         </h2>

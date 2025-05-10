@@ -3,7 +3,7 @@ import { BookOpen, Compass, Heart, Star } from "lucide-react";
 export const ChildrenSection = () => {
   return (
     <section id="children" className="py-16 bg-white w-full">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 md:px-12">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-gray-800">
           Untuk Anak & Remaja
         </h2>
