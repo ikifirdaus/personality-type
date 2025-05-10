@@ -24,15 +24,17 @@ const ArtikelPage = () => {
 
   return (
     <>
-      <div className="py-16 bg-white min-h-screen px-6 md:px-12">
-        {/* Breadcrumb */}
-        <nav className="text-base font-medium mb-6 text-gray-600 flex items-center space-x-2">
-          <Link href="/" className="hover:underline text-indigo-600">
+      <div className="bg-gray-900 text-white py-7 w-full px-6 md:px-12">
+        <nav className="text-base font-medium text-slate-400 flex items-center space-x-2">
+          <Link href="/" className="hover:underline text-white">
             Home
           </Link>
           <ChevronRight size={16} className="text-gray-400" />
-          <span className="text-gray-800 font-medium">Artikel</span>
+          <span className="font-medium">Artikel</span>
         </nav>
+      </div>
+      <div className="py-16 bg-white min-h-screen px-6 md:px-12">
+        {/* Breadcrumb */}
 
         {/* Judul dan Deskripsi */}
         <h1 className="text-4xl font-bold text-center mb-6 text-gray-800">
