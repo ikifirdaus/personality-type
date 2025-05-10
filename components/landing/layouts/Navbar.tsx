@@ -28,7 +28,7 @@ export const Navbar = () => {
       <div className="container mx-auto px-6 flex justify-between items-center">
         <div className="text-2xl font-bold text-indigo-700">NJPT</div>
         {/* Desktop Menu */}
-        <div className="hidden md:flex text-center space-x-8">
+        <div className="hidden md:flex text-center space-x-5 font-medium">
           <a href="#about" className="text-gray-700 hover:text-indigo-600">
             Tentang Kami
           </a>
@@ -57,7 +57,7 @@ export const Navbar = () => {
             Kontak
           </a>
         </div>
-        <div className="hidden md:flex">
+        <div className="hidden md:flex font-medium">
           <Link href="/signin" className="text-gray-700 hover:text-indigo-600">
             Sign In
           </Link>
@@ -70,7 +70,7 @@ export const Navbar = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-white absolute top-16 left-0 right-0 shadow-md z-50">
-          <div className="flex flex-col items-center py-4 space-y-4">
+          <div className="flex flex-col items-center py-4 space-y-4 font-medium">
             <a
               href="#about"
               className="text-gray-700 hover:text-indigo-600"
