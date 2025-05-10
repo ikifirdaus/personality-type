@@ -1,0 +1,78 @@
+model Question {
+  id                    Int         @id @default(autoincrement())
+  text                  String
+  type                  QuestionType
+  dimension             Dimension    // Misal berhubungan sama cognitive function
+  answers               Answer[]
+  defaultNextQuestionId Int?
+  defaultNextQuestion   Question?    @relation("DefaultNextQuestion", fields: [defaultNextQuestionId], references: [id])
+}
+
+model Answer {
+  id             Int       @id @default(autoincrement())
+  value          Int       // Likert scale 1-5
+  label          String
+  questionId     Int
+  question       Question  @relation(fields: [questionId], references: [id])
+  nextQuestionId Int?
+  nextQuestion   Question? @relation("AnswerNextQuestion", fields: [nextQuestionId], references: [id])
+}
+
+model User {
+  id            Int             @id @default(autoincrement())
+  email         String          @unique
+  responses     UserResponse[]
+  result        UserResult?
+}
+
+model UserResponse {
+  id          Int        @id @default(autoincrement())
+  userId      Int
+  questionId  Int
+  answerId    Int
+
+  user        User       @relation(fields: [userId], references: [id])
+  question    Question   @relation(fields: [questionId], references: [id])
+  answer      Answer     @relation(fields: [answerId], references: [id])
+
+  createdAt   DateTime   @default(now())
+}
+
+model UserResult {
+  id              Int       @id @default(autoincrement())
+  userId          Int       @unique
+  njptType        String    // Ex: INFP, ESTJ, dst
+  dominantFunction CognitiveFunction
+  auxiliaryFunction CognitiveFunction
+  tertiaryFunction CognitiveFunction
+  inferiorFunction CognitiveFunction
+  archetypes      Json      // Mapping Archetype ➔ CognitiveFunction
+  dimensionScores Json      // Skor lengkap
+  createdAt       DateTime  @default(now())
+
+  user            User      @relation(fields: [userId], references: [id])
+}
+
+enum QuestionType {
+  SINGLE_CHOICE
+  MULTIPLE_CHOICE
+  LIKERT_SCALE
+}
+
+enum Dimension {
+  IE  // Introvert - Exttravert
+  NS  // Intuitive - Sensing
+  TF  // Thinking - Feeling
+  JP  // Judging - Perceiving
+}
+
+enum CognitiveFunction {
+  Fi
+  Fe
+  Ti
+  Te
+  Si
+  Se
+  Ni
+  Ne
+}
