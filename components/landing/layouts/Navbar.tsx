@@ -57,9 +57,9 @@ export const Navbar = () => {
             Kontak
           </a>
         </div>
-        <div className="">
+        <div className="hidden md:flex">
           <Link href="/signin" className="text-gray-700 hover:text-indigo-600">
-            Signin
+            Sign In
           </Link>
         </div>
         {/* Mobile Menu Button */}
@@ -120,6 +120,12 @@ export const Navbar = () => {
             >
               Kontak
             </a>
+            <Link
+              href="/signin"
+              className="text-gray-700 hover:text-indigo-600"
+            >
+              Sign In
+            </Link>
           </div>
         </div>
       )}
