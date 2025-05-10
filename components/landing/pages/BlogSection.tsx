@@ -1,5 +1,7 @@
 import React from "react";
 import { Calendar, Clock } from "lucide-react";
+import Link from "next/link";
+
 export const BlogSection = () => {
   const articles = [
     {
@@ -79,9 +81,12 @@ export const BlogSection = () => {
           ))}
         </div>
         <div className="text-center mt-10">
-          <button className="bg-white hover:bg-gray-100 text-indigo-600 font-semibold py-3 px-6 rounded-lg border border-indigo-600 transition duration-300">
+          <Link
+            href="/artikel"
+            className="bg-white hover:bg-gray-100 text-indigo-600 font-semibold py-3 px-6 rounded-lg border border-indigo-600 transition duration-300"
+          >
             Lihat Semua Artikel
-          </button>
+          </Link>
         </div>
       </div>
     </section>
