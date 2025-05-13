@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import { Calendar, Clock, ChevronRight } from "lucide-react";
-import Link from "next/link";
+import { Calendar, Clock } from "lucide-react";
+import Breadcrumb from "../ui/Breadcrumb/Breadcrumb";
+import FooterDetail from "../layouts/FooterDetail";
 
 const allArticles = Array.from({ length: 30 }, (_, i) => ({
   title: `Artikel ke-${i + 1}`,
@@ -24,18 +25,14 @@ const ArtikelPage = () => {
 
   return (
     <>
-      <div className="bg-gray-900 text-white py-7 w-full px-6 md:px-12">
-        <nav className="text-base font-medium text-slate-400 flex items-center space-x-2">
-          <Link href="/" className="hover:underline text-white">
-            Home
-          </Link>
-          <ChevronRight size={16} className="text-gray-400" />
-          <span className="font-medium">Artikel</span>
-        </nav>
-      </div>
+      <Breadcrumb
+        title="Daftar Artikel"
+        items={[
+          // { text: "Blog", link: "/blog" },
+          { text: "Artikel" }, // tidak ada link, jadi teks aktif
+        ]}
+      />
       <div className="py-16 bg-white min-h-screen px-6 md:px-12">
-        {/* Breadcrumb */}
-
         {/* Judul dan Deskripsi */}
         <h1 className="text-4xl font-bold text-center mb-6 text-gray-800">
           Semua Artikel
@@ -112,16 +109,7 @@ const ArtikelPage = () => {
           </button>
         </div>
 
-        {/* Footer */}
-        <footer className="mt-16 pt-12 border-t text-center text-gray-500 text-sm">
-          <p>
-            © {new Date().getFullYear()}{" "}
-            <span className="font-medium text-gray-700">
-              NJPT (Neuroscience Jungian Personality Type)
-            </span>
-            . All rights reserved.
-          </p>
-        </footer>
+        <FooterDetail />
       </div>
     </>
   );

@@ -155,8 +155,8 @@ export default function Register() {
 
           <div className="text-sm">
             Saya menyetujui{" "}
-            <span className="text-blue-500">
-              <Link href="/kebijakanPrivasi">Kebijakan & Privasi</Link>
+            <span className="text-blue-500 hover:text-blue-800 hover:underline">
+              <Link href="/kebijakan">Kebijakan & Privasi</Link>
             </span>
           </div>
 

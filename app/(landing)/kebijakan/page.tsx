@@ -1,11 +1,11 @@
 import { LandingSkeleton } from "@/components/landing/layouts/LandingSkeleton";
-import HomePage from "@/components/landing/pages/HomePage";
+import KebijakanPage from "@/components/landing/pages/KebijakanPage";
 import { Suspense } from "react";
 
 export default function Page() {
   return (
     <Suspense fallback={<LandingSkeleton />}>
-      <HomePage />
+      <KebijakanPage />
     </Suspense>
   );
 }

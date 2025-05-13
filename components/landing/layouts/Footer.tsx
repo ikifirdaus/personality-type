@@ -1,5 +1,6 @@
 import React from "react";
 import { Facebook, Instagram, Twitter, Youtube, Mail } from "lucide-react";
+import Link from "next/link";
 export const Footer = () => {
   return (
     <footer id="contact" className="bg-gray-900 text-white pt-16 pb-8 w-full">
@@ -90,6 +91,14 @@ export const Footer = () => {
                 >
                   Artikel
                 </a>
+              </li>
+              <li>
+                <Link
+                  href="/kebijakan"
+                  className="text-gray-400 hover:text-white transition duration-300"
+                >
+                  Kebijakan & Privasi
+                </Link>
               </li>
             </ul>
           </div>
