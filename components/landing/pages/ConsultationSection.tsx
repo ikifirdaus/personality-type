@@ -21,7 +21,7 @@ export const ConsultationSection = () => {
   return (
     <section
       id="consultation"
-      className="py-16 bg-gradient-to-b from-gray-50 to-white w-full"
+      className="py-16 bg-gradient-to-b from-gray-50 to-white w-full scroll-mt-20"
     >
       <div className="container mx-auto px-6 md:px-12">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-gray-800">

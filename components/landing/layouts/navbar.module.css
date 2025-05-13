@@ -1,0 +1,39 @@
+.animatedGradientButton {
+  position: relative;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  color: white;
+  font-weight: 500;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  z-index: 0;
+  background: linear-gradient(270deg, #6366f1, #8b5cf6, #6366f1);
+  background-size: 600% 600%;
+  animation: gradientSlide 8s ease-in-out infinite;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.animatedGradientButton:hover {
+  background-position: 100% 50%;
+  transform: scale(1.03);
+}
+
+.iconText {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes gradientSlide {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

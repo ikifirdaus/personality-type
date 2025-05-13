@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Menu, X, ChevronDown, User } from "lucide-react";
+import { Menu, X, ChevronDown, User, SmilePlus } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
+import styles from "./navbar.module.css";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,38 +40,44 @@ export const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex text-center space-x-5 font-medium items-center justify-center">
-          <a href="#about" className="text-gray-700 hover:text-indigo-600">
+          <Link href="#about" className="text-gray-700 hover:text-indigo-600">
             Tentang Kami
-          </a>
-          <a
+          </Link>
+          <Link
             href="#what-is-njpt"
             className="text-gray-700 hover:text-indigo-600"
           >
             Apa itu NJPT?
-          </a>
-          <a
+          </Link>
+          <Link
             href="#consultation"
             className="text-gray-700 hover:text-indigo-600"
           >
             Konsultasi
-          </a>
-          <a href="#children" className="text-gray-700 hover:text-indigo-600">
+          </Link>
+          <Link
+            href="#children"
+            className="text-gray-700 hover:text-indigo-600"
+          >
             Untuk Anak & Remaja
-          </a>
-          <a href="#blog" className="text-gray-700 hover:text-indigo-600">
+          </Link>
+          <Link href="#blog" className="text-gray-700 hover:text-indigo-600">
             Artikel
-          </a>
-          <a href="#contact" className="text-gray-700 hover:text-indigo-600">
+          </Link>
+          <Link href="#contact" className="text-gray-700 hover:text-indigo-600">
             Kontak
-          </a>
+          </Link>
           {session?.user?.role === "USER" && (
             <div className="flex">
-              <a
+              <Link
                 href="/personalityTest"
-                className="bg-indigo-500 p-2 px-6 py-3 rounded-md text-white hover:bg-indigo-600"
+                className={styles.animatedGradientButton}
               >
+                <span className={styles.iconText}>
+                  <SmilePlus />
+                </span>
                 Tes Kepribadian
-              </a>
+              </Link>
             </div>
           )}
         </div>
@@ -118,57 +125,61 @@ export const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white absolute top-16 left-0 right-0 shadow-md z-50">
           <div className="flex flex-col items-center py-4 space-y-4 font-medium">
-            <a
+            <Link
               href="#about"
               onClick={toggleMenu}
               className="text-gray-700 hover:text-indigo-600"
             >
               Tentang Kami
-            </a>
-            <a
+            </Link>
+            <Link
               href="#what-is-njpt"
               onClick={toggleMenu}
               className="text-gray-700 hover:text-indigo-600"
             >
               Apa itu NJPT?
-            </a>
+            </Link>
 
-            <a
+            <Link
               href="#consultation"
               onClick={toggleMenu}
               className="text-gray-700 hover:text-indigo-600"
             >
               Konsultasi
-            </a>
-            <a
+            </Link>
+            <Link
               href="#children"
               onClick={toggleMenu}
               className="text-gray-700 hover:text-indigo-600"
             >
               Untuk Anak & Remaja
-            </a>
-            <a
+            </Link>
+            <Link
               href="#blog"
               onClick={toggleMenu}
               className="text-gray-700 hover:text-indigo-600"
             >
               Artikel
-            </a>
-            <a
+            </Link>
+            <Link
               href="#contact"
               onClick={toggleMenu}
               className="text-gray-700 hover:text-indigo-600"
             >
               Kontak
-            </a>
+            </Link>
             {session?.user?.role === "USER" && (
-              <a
-                href="/personalityTest"
-                onClick={toggleMenu}
-                className="bg-indigo-500 p-2 px-6 py-3 rounded-md text-white hover:bg-indigo-600"
-              >
-                Tes Kepribadian
-              </a>
+              <div className="flex">
+                <a
+                  href="/personalityTest"
+                  className={styles.animatedGradientButton}
+                >
+                  <span className={styles.iconText}>
+                    <SmilePlus />
+                  </span>
+                  Tes Kepribadian
+                </a>
+              </div>
             )}
             {session?.user ? (
               <button

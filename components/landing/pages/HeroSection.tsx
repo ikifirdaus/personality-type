@@ -1,7 +1,15 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 import Button from "../ui/Button/Button";
+
 export const HeroSection = () => {
+  const scrollToSection = () => {
+    const section = document.getElementById("what-is-njpt");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section className="w-full bg-gradient-to-r from-indigo-100 via-purple-50 to-blue-50 py-20">
       <div className="container mx-auto px-6 md:px-12 flex flex-col lg:flex-row items-center">
@@ -17,11 +25,14 @@ export const HeroSection = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
               className=""
-              url="/"
+              url="/personalityTest"
               title="Mulai Tes Sekarang"
               icon={<ArrowRight size={18} className="ml-2" />}
             />
-            <button className="bg-white hover:bg-gray-100 text-indigo-600 font-semibold py-3 px-6 rounded-lg border border-indigo-600 transition duration-300">
+            <button
+              onClick={scrollToSection}
+              className="bg-white hover:bg-gray-100 text-indigo-600 font-semibold py-3 px-6 rounded-lg border border-indigo-600 transition duration-300"
+            >
               Pelajari Lebih Lanjut
             </button>
           </div>
