@@ -38,7 +38,7 @@ export const Navbar = () => {
         <div className="text-2xl font-bold text-indigo-700">NJPT</div>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex text-center space-x-5 font-medium">
+        <div className="hidden md:flex text-center space-x-5 font-medium items-center justify-center">
           <a href="#about" className="text-gray-700 hover:text-indigo-600">
             Tentang Kami
           </a>
@@ -47,9 +47,6 @@ export const Navbar = () => {
             className="text-gray-700 hover:text-indigo-600"
           >
             Apa itu NJPT?
-          </a>
-          <a href="#test" className="text-gray-700 hover:text-indigo-600">
-            Tes Kepribadian
           </a>
           <a
             href="#consultation"
@@ -66,6 +63,16 @@ export const Navbar = () => {
           <a href="#contact" className="text-gray-700 hover:text-indigo-600">
             Kontak
           </a>
+          {session?.user?.role === "USER" && (
+            <div className="flex">
+              <a
+                href="/personalityTest"
+                className="bg-indigo-500 p-2 px-6 py-3 rounded-md text-white hover:bg-indigo-600"
+              >
+                Tes Kepribadian
+              </a>
+            </div>
+          )}
         </div>
 
         {/* Auth Section */}
@@ -125,13 +132,7 @@ export const Navbar = () => {
             >
               Apa itu NJPT?
             </a>
-            <a
-              href="#test"
-              onClick={toggleMenu}
-              className="text-gray-700 hover:text-indigo-600"
-            >
-              Tes Kepribadian
-            </a>
+
             <a
               href="#consultation"
               onClick={toggleMenu}
@@ -160,6 +161,15 @@ export const Navbar = () => {
             >
               Kontak
             </a>
+            {session?.user?.role === "USER" && (
+              <a
+                href="/personalityTest"
+                onClick={toggleMenu}
+                className="bg-indigo-500 p-2 px-6 py-3 rounded-md text-white hover:bg-indigo-600"
+              >
+                Tes Kepribadian
+              </a>
+            )}
             {session?.user ? (
               <button
                 onClick={handleLogout}
