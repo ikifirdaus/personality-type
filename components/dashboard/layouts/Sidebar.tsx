@@ -4,6 +4,7 @@ import {
   LayoutDashboard,
   ListChecks,
   ListCollapse,
+  Newspaper,
   Users,
 } from "lucide-react";
 import Link from "next/link";
@@ -20,14 +21,15 @@ const Sidebar = () => {
     { icon: ListCollapse, label: "Answers", path: "/admin/answer" },
     {
       icon: BetweenVerticalStart,
-      label: "Cognitive Category",
+      label: "Cognitive",
       path: "/admin/cognitive",
     },
     {
       icon: ClipboardList,
-      label: "Questions List",
-      path: "/admin/questions",
+      label: "Question",
+      path: "/admin/question",
     },
+    { icon: Newspaper, label: "Artikel", path: "/admin/artikel" },
     { icon: Users, label: "Users/Staff", path: "/admin/user" },
   ];
 
