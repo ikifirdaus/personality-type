@@ -11,7 +11,8 @@ export default function LoginReminderWrapper() {
   useEffect(() => {
     if (status === "loading") return;
 
-    const isLoggedInAsUser = session?.user?.role === "USER";
+    const isLoggedInAsUser =
+      session?.user?.role === "USER" || session?.user?.role === "ADMIN";
     if (!isLoggedInAsUser) {
       setShowModal(true);
     }
