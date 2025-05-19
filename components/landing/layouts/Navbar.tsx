@@ -1,22 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {
-  Menu,
-  X,
-  ChevronDown,
-  User,
-  SmilePlus,
-  LogOut,
-  ShoppingCart,
-} from "lucide-react";
+import { Menu, X, ChevronDown, User, LogOut, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
-import styles from "./navbar.module.css";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
 
   const { data: session } = useSession();
   const router = useRouter();
@@ -31,6 +23,8 @@ export const Navbar = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+  const toggleMobileDropdown = () =>
+    setIsMobileDropdownOpen(!isMobileDropdownOpen);
 
   const handleLogout = async () => {
     await signOut({ redirect: false });
@@ -41,6 +35,16 @@ export const Navbar = () => {
     isSticky ? "fixed top-0 bg-white shadow-md z-50" : "bg-transparent"
   }`;
 
+  const menuItems = [
+    { href: "#about", label: "Tentang Kami" },
+    { href: "#what-is-njpt", label: "Apa itu NJPT?" },
+    { href: "#consultation", label: "Konsultasi" },
+    { href: "#children", label: "Untuk Anak & Remaja" },
+    { href: "/produk", label: "Produk" },
+    { href: "#blog", label: "Artikel" },
+    { href: "#contact", label: "Kontak" },
+  ];
+
   return (
     <nav className={navbarClasses}>
       <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
@@ -48,52 +52,18 @@ export const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex text-center space-x-5 font-medium items-center justify-center">
-          <Link href="#about" className="text-gray-700 hover:text-indigo-600">
-            Tentang Kami
-          </Link>
-          <Link
-            href="#what-is-njpt"
-            className="text-gray-700 hover:text-indigo-600"
-          >
-            Apa itu NJPT?
-          </Link>
-          <Link
-            href="#consultation"
-            className="text-gray-700 hover:text-indigo-600"
-          >
-            Konsultasi
-          </Link>
-          <Link
-            href="#children"
-            className="text-gray-700 hover:text-indigo-600"
-          >
-            Untuk Anak & Remaja
-          </Link>
-          <Link href="/produk" className="text-gray-700 hover:text-indigo-600">
-            Produk
-          </Link>
-          <Link href="#blog" className="text-gray-700 hover:text-indigo-600">
-            Artikel
-          </Link>
-          <Link href="#contact" className="text-gray-700 hover:text-indigo-600">
-            Kontak
-          </Link>
-          {/* {session?.user?.role === "USER" && (
-            <div className="flex">
-              <Link
-                href="/personalityTest"
-                className={styles.animatedGradientButton}
-              >
-                <span className={styles.iconText}>
-                  <SmilePlus />
-                </span>
-                Tes Kepribadian
-              </Link>
-            </div>
-          )} */}
+          {menuItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="text-gray-700 hover:text-indigo-600"
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
 
-        {/* Auth Section */}
+        {/* Desktop Auth Section */}
         <div className="hidden md:flex font-medium relative">
           {session?.user ? (
             <div className="relative">
@@ -109,14 +79,14 @@ export const Navbar = () => {
                 <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md z-50">
                   <Link
                     href="/cart"
-                    className="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 border-b flex items-center gap-2"
+                    className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 border-b flex items-center gap-2"
                   >
                     <ShoppingCart className="w-5 h-5" />
                     Cart
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                    className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
                   >
                     <LogOut className="w-5 h-5" />
                     Logout
@@ -144,72 +114,57 @@ export const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white absolute top-16 left-0 right-0 shadow-md z-50">
           <div className="flex flex-col items-center py-4 space-y-4 font-medium">
-            <Link
-              href="#about"
-              onClick={toggleMenu}
-              className="text-gray-700 hover:text-indigo-600"
-            >
-              Tentang Kami
-            </Link>
-            <Link
-              href="#what-is-njpt"
-              onClick={toggleMenu}
-              className="text-gray-700 hover:text-indigo-600"
-            >
-              Apa itu NJPT?
-            </Link>
-
-            <Link
-              href="#consultation"
-              onClick={toggleMenu}
-              className="text-gray-700 hover:text-indigo-600"
-            >
-              Konsultasi
-            </Link>
-            <Link
-              href="#children"
-              onClick={toggleMenu}
-              className="text-gray-700 hover:text-indigo-600"
-            >
-              Untuk Anak & Remaja
-            </Link>
-            <Link
-              href="#blog"
-              onClick={toggleMenu}
-              className="text-gray-700 hover:text-indigo-600"
-            >
-              Artikel
-            </Link>
-            <Link
-              href="#contact"
-              onClick={toggleMenu}
-              className="text-gray-700 hover:text-indigo-600"
-            >
-              Kontak
-            </Link>
-            {session?.user?.role === "USER" && (
-              <div className="flex">
-                <a
-                  href="/personalityTest"
-                  className={styles.animatedGradientButton}
-                >
-                  <span className={styles.iconText}>
-                    <SmilePlus />
-                  </span>
-                  Tes Kepribadian
-                </a>
-              </div>
-            )}
-            {session?.user ? (
-              <button
-                onClick={handleLogout}
+            {menuItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={toggleMenu}
                 className="text-gray-700 hover:text-indigo-600"
               >
-                Logout
-              </button>
+                {item.label}
+              </Link>
+            ))}
+
+            {/* Auth Section */}
+            {session?.user ? (
+              <div className="w-full px-4">
+                <button
+                  onClick={toggleMobileDropdown}
+                  className="w-full flex items-center justify-center gap-1 text-gray-700 hover:text-indigo-600"
+                >
+                  <div className="flex items-center space-x-2">
+                    <User className="w-5 h-5" />
+                    <span>{session.user.name}</span>
+                  </div>
+                  <ChevronDown size={16} />
+                </button>
+                {isMobileDropdownOpen && (
+                  <div className="mt-2 bg-white shadow-md rounded-md border">
+                    <Link
+                      href="/cart"
+                      onClick={toggleMenu}
+                      className="px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 border-b flex items-center gap-2"
+                    >
+                      <ShoppingCart className="w-5 h-5" />
+                      Cart
+                    </Link>
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        toggleMenu();
+                      }}
+                      className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                    >
+                      <LogOut className="w-5 h-5" />
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
               <Link
                 href="/signin"
+                onClick={toggleMenu}
                 className="text-gray-700 hover:text-indigo-600"
               >
                 Sign In
