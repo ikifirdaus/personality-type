@@ -12,13 +12,7 @@ import { useSearchParams } from "next/navigation";
 import SearchColumn from "@/components/dashboard/ui/Search/SearchColumn";
 import TableSkeleton from "@/components/dashboard/ui/TableSkeleton/TableSkeleton";
 import Skeleton from "@/components/dashboard/ui/Skeleton/Skeleton";
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-}
+import { User } from "@/types/user";
 
 const UserPage = () => {
   const [loading, setLoading] = useState(true);

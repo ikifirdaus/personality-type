@@ -46,7 +46,11 @@ export default function UserForm({ user }: UserFormProps) {
 
   const router = useRouter();
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   async function onSubmit(data: FormValues) {
+    setIsSubmitting(true);
+
     try {
       let response;
       if (user) {
@@ -77,6 +81,8 @@ export default function UserForm({ user }: UserFormProps) {
       }
     } catch (error) {
       setToast({ message: "An error occurred.", type: "error" });
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -124,7 +130,9 @@ export default function UserForm({ user }: UserFormProps) {
           )}
         </div>
 
-        <ButtonSubmit type="submit">Submit</ButtonSubmit>
+        <ButtonSubmit type="submit" loading={isSubmitting}>
+          Submit
+        </ButtonSubmit>
       </form>
 
       {toast && (

@@ -1,37 +1,43 @@
-import React from "react";
-import { Calendar, Clock } from "lucide-react";
+"use client";
+import React, { useEffect, useState } from "react";
+import { CalendarClock, CircleUser } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+
+interface Article {
+  id: number;
+  title: string;
+  description: string;
+  ogImage: string | null;
+  createdAt: string;
+  // readingTime?: string;
+  slug: string;
+  user: {
+    name: string;
+  };
+}
 
 export const BlogSection = () => {
-  const articles = [
-    {
-      title: "Mengenal Diri Lewat Fungsi Otak",
-      excerpt:
-        "Bagaimana neuroscience dapat membantu kita memahami cara kerja otak dan pengaruhnya terhadap kepribadian.",
-      image:
-        "https://images.unsplash.com/photo-1454789548928-9efd52dc4031?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-      date: "5 Sep 2023",
-      readTime: "8 menit",
-    },
-    {
-      title: "Jungian Typology untuk Musisi dan Seniman",
-      excerpt:
-        "Bagaimana pemahaman fungsi kognitif dapat membantu mengembangkan kreativitas dan ekspresi artistik.",
-      image:
-        "https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-      date: "28 Agu 2023",
-      readTime: "6 menit",
-    },
-    {
-      title: "Bagaimana Arketipe Membentuk Tujuan Hidup",
-      excerpt:
-        "Menelusuri pengaruh arketipe dalam pembentukan nilai, motivasi, dan tujuan hidup seseorang.",
-      image:
-        "https://images.unsplash.com/photo-1454789548928-9efd52dc4031?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80",
-      date: "15 Agu 2023",
-      readTime: "10 menit",
-    },
-  ];
+  const [articles, setArticles] = useState<Article[]>([]);
+
+  useEffect(() => {
+    async function fetchArticles() {
+      const res = await fetch("/api/landing/article");
+      const data: Article[] = await res.json();
+
+      const sorted = data
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        )
+        .slice(0, 3);
+
+      setArticles(sorted);
+    }
+
+    fetchArticles();
+  }, []);
+
   return (
     <section id="blog" className="py-16 bg-gray-50 w-full scroll-mt-20">
       <div className="container mx-auto px-6 md:px-12">
@@ -43,41 +49,54 @@ export const BlogSection = () => {
           pengembangan diri.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {articles.map((article, index) => (
-            <div
-              key={index}
+          {articles.map((article) => (
+            <Link
+              href={`/artikel/${article.slug}`}
+              key={article.id}
               className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
             >
               <div className="h-48 overflow-hidden">
-                <img
-                  src={article.image}
+                <Image
+                  src={article.ogImage ?? "/noPicture.png"}
                   alt={article.title}
                   className="w-full h-full object-cover"
+                  width={0}
+                  height={0}
+                  sizes="1000vw"
                 />
               </div>
               <div className="p-6">
-                <div className="flex items-center text-gray-500 text-sm mb-3">
-                  <div className="flex items-center mr-4">
-                    <Calendar size={14} className="mr-1" />
-                    <span>{article.date}</span>
+                <div className="flex items-center text-gray-400 mb-3 text-[15px] gap-4">
+                  <div className="flex items-center">
+                    <CalendarClock size={18} className="mr-1" />
+                    <span>
+                      {new Date(article.createdAt).toLocaleDateString("id-ID", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </span>
                   </div>
                   <div className="flex items-center">
-                    <Clock size={14} className="mr-1" />
-                    <span>{article.readTime}</span>
+                    <CircleUser size={18} className="mr-1" />
+                    <span>{article.user.name}</span>
                   </div>
+                  {/* {article.readingTime && (
+                    <div className="flex items-center">
+                      <Clock size={14} className="mr-1" />
+                      <span>{article.readingTime}</span>
+                    </div>
+                  )} */}
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-3">
                   {article.title}
                 </h3>
-                <p className="text-gray-600 mb-4">{article.excerpt}</p>
-                <a
-                  href="#"
-                  className="text-indigo-600 font-semibold hover:text-indigo-800 transition duration-300"
-                >
+                <p className="text-gray-600 mb-4">{article.description}</p>
+                <span className="text-indigo-600 font-semibold hover:text-indigo-800 transition duration-300">
                   Baca selengkapnya →
-                </a>
+                </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         <div className="text-center mt-10">

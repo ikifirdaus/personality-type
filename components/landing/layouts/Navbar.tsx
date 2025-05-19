@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Menu, X, ChevronDown, User, SmilePlus } from "lucide-react";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  User,
+  SmilePlus,
+  LogOut,
+  ShoppingCart,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
@@ -61,13 +69,16 @@ export const Navbar = () => {
           >
             Untuk Anak & Remaja
           </Link>
+          <Link href="/produk" className="text-gray-700 hover:text-indigo-600">
+            Produk
+          </Link>
           <Link href="#blog" className="text-gray-700 hover:text-indigo-600">
             Artikel
           </Link>
           <Link href="#contact" className="text-gray-700 hover:text-indigo-600">
             Kontak
           </Link>
-          {session?.user?.role === "USER" && (
+          {/* {session?.user?.role === "USER" && (
             <div className="flex">
               <Link
                 href="/personalityTest"
@@ -79,7 +90,7 @@ export const Navbar = () => {
                 Tes Kepribadian
               </Link>
             </div>
-          )}
+          )} */}
         </div>
 
         {/* Auth Section */}
@@ -96,10 +107,18 @@ export const Navbar = () => {
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md z-50">
+                  <Link
+                    href="/cart"
+                    className="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 border-b flex items-center gap-2"
+                  >
+                    <ShoppingCart className="w-5 h-5" />
+                    Cart
+                  </Link>
                   <button
                     onClick={handleLogout}
-                    className="w-full text-left px-4 py-3 text-sm rounded-md text-gray-700 hover:bg-gray-100"
+                    className="block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
                   >
+                    <LogOut className="w-5 h-5" />
                     Logout
                   </button>
                 </div>

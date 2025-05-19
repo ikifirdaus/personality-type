@@ -1,18 +1,21 @@
-"use client";
-
-import { ButtonHTMLAttributes, ReactNode } from "react";
-
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode;
-}
-
-export function ButtonSubmit({ children, ...props }: ButtonProps) {
+// components/Button/ButtonSubmit.tsx
+export function ButtonSubmit({
+  children,
+  loading = false,
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & { loading?: boolean }) {
   return (
     <button
       {...props}
-      className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      disabled={loading || props.disabled}
+      className={`flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition ${
+        loading ? "opacity-80 cursor-not-allowed" : ""
+      }`}
     >
-      {children}
+      {loading && (
+        <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+      )}
+      {loading ? "Submitting..." : children}
     </button>
   );
 }

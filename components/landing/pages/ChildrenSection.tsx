@@ -1,5 +1,6 @@
 import React from "react";
 import { BookOpen, Compass, Heart, Star } from "lucide-react";
+import Link from "next/link";
 export const ChildrenSection = () => {
   return (
     <section id="children" className="py-16 bg-white w-full scroll-mt-20">
@@ -85,9 +86,12 @@ export const ChildrenSection = () => {
               </div>
             </div>
             <div className="mt-10">
-              <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
+              <Link
+                href="/produk"
+                className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300"
+              >
                 Jadwalkan Konsultasi Anak
-              </button>
+              </Link>
             </div>
           </div>
         </div>

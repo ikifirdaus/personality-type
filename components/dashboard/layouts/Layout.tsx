@@ -13,7 +13,7 @@ const Layout = ({ children }: LayoutProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex font-[family-name:var(--font-geist-sans)]">
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"

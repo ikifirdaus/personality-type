@@ -5,6 +5,7 @@ import {
   ListChecks,
   ListCollapse,
   Newspaper,
+  ShoppingBag,
   Users,
 } from "lucide-react";
 import Link from "next/link";
@@ -29,7 +30,8 @@ const Sidebar = () => {
       label: "Question",
       path: "/admin/question",
     },
-    { icon: Newspaper, label: "Artikel", path: "/admin/artikel" },
+    { icon: ShoppingBag, label: "Product", path: "/admin/product" },
+    { icon: Newspaper, label: "Article", path: "/admin/article" },
     { icon: Users, label: "Users/Staff", path: "/admin/user" },
   ];
 

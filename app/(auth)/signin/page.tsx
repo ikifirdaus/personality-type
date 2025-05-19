@@ -51,7 +51,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4">
+    <div className="flex min-h-screen items-center justify-center px-4 font-[family-name:var(--font-geist-sans)]">
       <div className="w-full max-w-md bg-white p-4 md:p-6 rounded-xl shadow-md border">
         <h1 className="text-2xl font-bold mb-4 text-center">
           Sign in to your account

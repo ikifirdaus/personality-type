@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 export const ConsultationSection = () => {
   const testimonials = [
@@ -75,9 +76,12 @@ export const ConsultationSection = () => {
               </div>
             </div>
             <div className="mt-8">
-              <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
+              <Link
+                href="/produk"
+                className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300"
+              >
                 Jadwalkan Konsultasi
-              </button>
+              </Link>
             </div>
           </div>
           <div>
