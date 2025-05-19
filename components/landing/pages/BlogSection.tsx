@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { CalendarClock, CircleUser } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import SkeletonCard from "../ui/Card/SkeletonCard";
 
 interface Article {
   id: number;
@@ -19,6 +21,9 @@ interface Article {
 
 export const BlogSection = () => {
   const [articles, setArticles] = useState<Article[]>([]);
+
+  const [loadingProductId, setLoadingProductId] = useState<number | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchArticles() {
@@ -49,55 +54,67 @@ export const BlogSection = () => {
           pengembangan diri.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {articles.map((article) => (
-            <Link
-              href={`/artikel/${article.slug}`}
-              key={article.id}
-              className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
-            >
-              <div className="h-48 overflow-hidden">
-                <Image
-                  src={article.ogImage ?? "/noPicture.png"}
-                  alt={article.title}
-                  className="w-full h-full object-cover"
-                  width={0}
-                  height={0}
-                  sizes="1000vw"
-                />
-              </div>
-              <div className="p-6">
-                <div className="flex items-center text-gray-400 mb-3 text-[15px] gap-4">
-                  <div className="flex items-center">
-                    <CalendarClock size={18} className="mr-1" />
-                    <span>
-                      {new Date(article.createdAt).toLocaleDateString("id-ID", {
-                        day: "numeric",
-                        month: "short",
-                        year: "numeric",
-                      })}
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <CircleUser size={18} className="mr-1" />
-                    <span>{article.user.name}</span>
-                  </div>
-                  {/* {article.readingTime && (
+          {articles.map((article) =>
+            loadingProductId === article.id ? (
+              <SkeletonCard key={article.id} />
+            ) : (
+              <div
+                key={article.id}
+                onClick={() => {
+                  setLoadingProductId(article.id);
+                  setTimeout(() => {
+                    router.push(`/artikel/${article.slug}`);
+                  }, 600); // delay untuk nunjukin skeleton
+                }}
+                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+              >
+                <div className="h-48 overflow-hidden">
+                  <Image
+                    src={article.ogImage ?? "/noPicture.png"}
+                    alt={article.title}
+                    className="w-full h-full object-cover"
+                    width={0}
+                    height={0}
+                    sizes="1000vw"
+                  />
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center text-gray-400 mb-3 text-[15px] gap-4">
+                    <div className="flex items-center">
+                      <CalendarClock size={18} className="mr-1" />
+                      <span>
+                        {new Date(article.createdAt).toLocaleDateString(
+                          "id-ID",
+                          {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          }
+                        )}
+                      </span>
+                    </div>
+                    <div className="flex items-center">
+                      <CircleUser size={18} className="mr-1" />
+                      <span>{article.user.name}</span>
+                    </div>
+                    {/* {article.readingTime && (
                     <div className="flex items-center">
                       <Clock size={14} className="mr-1" />
                       <span>{article.readingTime}</span>
                     </div>
                   )} */}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-3">
+                    {article.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4">{article.description}</p>
+                  <span className="text-indigo-600 font-semibold hover:text-indigo-800 transition duration-300">
+                    Baca selengkapnya →
+                  </span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-3">
-                  {article.title}
-                </h3>
-                <p className="text-gray-600 mb-4">{article.description}</p>
-                <span className="text-indigo-600 font-semibold hover:text-indigo-800 transition duration-300">
-                  Baca selengkapnya →
-                </span>
               </div>
-            </Link>
-          ))}
+            )
+          )}
         </div>
         <div className="text-center mt-10">
           <Link

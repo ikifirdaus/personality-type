@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 export const AboutSection = () => {
   return (
@@ -30,10 +31,13 @@ export const AboutSection = () => {
           </div>
           <div className="lg:w-1/2 mt-8 lg:mt-0">
             <div className="bg-gray-50 p-6 rounded-xl shadow-lg">
-              <img
-                src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+              <Image
+                src="/about-section.avif"
                 alt="Diagram fungsi kognitif dan otak"
                 className="w-full rounded-lg mb-6"
+                width={0}
+                height={0}
+                sizes="1000vw"
               />
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-indigo-50 p-4 rounded-lg">

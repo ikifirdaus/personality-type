@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 import Button from "../ui/Button/Button";
+import Image from "next/image";
 
 export const HeroSection = () => {
   const scrollToSection = () => {
@@ -38,10 +39,13 @@ export const HeroSection = () => {
           </div>
         </div>
         <div className="lg:w-1/2 flex justify-center">
-          <img
-            src="https://images.unsplash.com/photo-1559757175-5700dde675bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+          <Image
+            src="/hero-section.png"
             alt="Ilustrasi otak dan kepribadian"
             className="w-full max-w-md rounded-lg shadow-xl"
+            width={0}
+            height={0}
+            sizes="1000vw"
           />
         </div>
       </div>

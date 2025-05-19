@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 export const ConsultationSection = () => {
@@ -7,16 +8,14 @@ export const ConsultationSection = () => {
       role: "Creative Director",
       quote:
         "NJPT membantu saya memahami pola kerja otak dan kepribadian saya. Sekarang saya bisa lebih efektif dalam tim dan mengembangkan kreativitas sesuai tipe kognitif saya.",
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+      image: "/consultation-1.avif",
     },
     {
       name: "Reza Pratama",
       role: "Software Engineer",
       quote:
         "Konsultasi dengan tim NJPT membuka wawasan baru tentang bagaimana cara berpikir saya memengaruhi pendekatan problem-solving. Sangat membantu dalam karier teknologi.",
-      image:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+      image: "/consultation-2.avif",
     },
   ];
   return (
@@ -90,10 +89,13 @@ export const ConsultationSection = () => {
               {testimonials.map((testimonial, index) => (
                 <div key={index} className="bg-white p-6 rounded-xl shadow-md">
                   <div className="flex items-center mb-4">
-                    <img
+                    <Image
                       src={testimonial.image}
                       alt={testimonial.name}
                       className="w-12 h-12 rounded-full object-cover mr-4"
+                      width={0}
+                      height={0}
+                      sizes="1000vw"
                     />
                     <div>
                       <h4 className="font-bold text-gray-800">

@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { CalendarClock, CircleUser } from "lucide-react";
 import Breadcrumb from "../ui/Breadcrumb/Breadcrumb";
-import Link from "next/link";
 import Image from "next/image";
 import LayoutLandingDetail from "../layouts/LayoutLandingDetail";
+import { useRouter } from "next/navigation";
+import SkeletonCard from "../ui/Card/SkeletonCard";
 
 const ARTICLES_PER_PAGE = 12;
 
@@ -23,6 +24,9 @@ interface Article {
 const ArtikelPage = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [loadingProductId, setLoadingProductId] = useState<number | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchArticles() {
@@ -53,49 +57,58 @@ const ArtikelPage = () => {
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-6">
-            {paginatedArticles.map((article) => (
-              <Link
-                href={`/artikel/${article.slug}`}
-                key={article.id}
-                className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
-              >
-                <div className="h-48 overflow-hidden">
-                  <Image
-                    src={article.ogImage ?? "/noPicture.png"}
-                    alt={article.title}
-                    className="w-full h-full object-cover"
-                    width={0}
-                    height={0}
-                    sizes="1000vw"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center text-gray-400 mb-3 text-[15px] gap-4">
-                    <div className="flex items-center">
-                      <CalendarClock size={18} className="mr-1" />
-                      <span>
-                        {new Date(article.createdAt).toLocaleDateString(
-                          "id-ID",
-                          {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          }
-                        )}
-                      </span>
-                    </div>
-                    <div className="flex items-center">
-                      <CircleUser size={18} className="mr-1" />
-                      <span>{article.user.name}</span>
-                    </div>
+            {paginatedArticles.map((article) =>
+              loadingProductId === article.id ? (
+                <SkeletonCard key={article.id} />
+              ) : (
+                <div
+                  key={article.id}
+                  onClick={() => {
+                    setLoadingProductId(article.id);
+                    setTimeout(() => {
+                      router.push(`/artikel/${article.slug}`);
+                    }, 600); // delay untuk nunjukin skeleton
+                  }}
+                  className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                >
+                  <div className="h-48 overflow-hidden">
+                    <Image
+                      src={article.ogImage ?? "/noPicture.png"}
+                      alt={article.title}
+                      className="w-full h-full object-cover"
+                      width={0}
+                      height={0}
+                      sizes="1000vw"
+                    />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-3">
-                    {article.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4">{article.description}</p>
+                  <div className="p-6">
+                    <div className="flex items-center text-gray-400 mb-3 text-[15px] gap-4">
+                      <div className="flex items-center">
+                        <CalendarClock size={18} className="mr-1" />
+                        <span>
+                          {new Date(article.createdAt).toLocaleDateString(
+                            "id-ID",
+                            {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                            }
+                          )}
+                        </span>
+                      </div>
+                      <div className="flex items-center">
+                        <CircleUser size={18} className="mr-1" />
+                        <span>{article.user.name}</span>
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-3">
+                      {article.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4">{article.description}</p>
+                  </div>
                 </div>
-              </Link>
-            ))}
+              )
+            )}
           </div>
 
           {/* Pagination */}

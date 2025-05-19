@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 export const TeamSection = () => {
   const teamMembers = [
@@ -5,29 +6,25 @@ export const TeamSection = () => {
       name: "Dr. Rina Wijaya",
       role: "Psikolog & Founder",
       background: "Latar belakang psikologi klinis dan seni",
-      image:
-        "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+      image: "/team-1.avif",
     },
     {
       name: "Budi Santoso",
       role: "Neuroscience Researcher",
       background: "Teknologi & ilmu saraf",
-      image:
-        "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+      image: "/team-2.avif",
     },
     {
       name: "Maya Putri",
       role: "Art Therapist",
       background: "Seni rupa & musik",
-      image:
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+      image: "/team-3.avif",
     },
     {
       name: "Arif Rahman",
       role: "Career Coach",
       background: "Hukum & pengembangan SDM",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+      image: "/team-4.avif",
     },
   ];
   return (
@@ -47,10 +44,13 @@ export const TeamSection = () => {
               className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
             >
               <div className="h-64 overflow-hidden">
-                <img
+                <Image
                   src={member.image}
                   alt={member.name}
                   className="w-full h-full object-cover"
+                  width={0}
+                  height={0}
+                  sizes="1000vw"
                 />
               </div>
               <div className="p-6">

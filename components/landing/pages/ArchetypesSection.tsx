@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 // import React, { memo } from "react";
 export const ArchetypesSection = () => {
   return (
@@ -125,10 +127,13 @@ export const ArchetypesSection = () => {
                 </div>
               </div>
               <div className="mt-6">
-                <img
-                  src="https://images.unsplash.com/photo-1581092162384-8987c1d64718?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                <Image
+                  src="/archetype-section.avif"
                   alt="Diagram fungsi kognitif Jung"
                   className="w-full rounded-lg"
+                  width={0}
+                  height={0}
+                  sizes="1000vw"
                 />
               </div>
             </div>

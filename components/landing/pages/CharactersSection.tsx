@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 export const CharactersSection = () => {
   const characters = [
@@ -6,32 +7,28 @@ export const CharactersSection = () => {
       character: "Gandalf",
       movie: "The Lord of the Rings",
       traits: "Visioner, bijaksana, idealis",
-      image:
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+      image: "/character-1.avif",
     },
     {
       type: "ENFP",
       character: "Rapunzel",
       movie: "Tangled",
       traits: "Antusias, kreatif, penuh semangat",
-      image:
-        "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+      image: "/character-2.avif",
     },
     {
       type: "INTJ",
       character: "Doctor Strange",
       movie: "Marvel Universe",
       traits: "Strategis, visioner, independen",
-      image:
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+      image: "/character-3.avif",
     },
     {
       type: "ESTP",
       character: "Iron Man",
       movie: "Marvel Universe",
       traits: "Spontan, energik, improvisator",
-      image:
-        "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+      image: "/character-4.avif",
     },
   ];
   return (
@@ -50,10 +47,13 @@ export const CharactersSection = () => {
               className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
             >
               <div className="h-48 overflow-hidden">
-                <img
+                <Image
                   src={char.image}
                   alt={char.character}
                   className="w-full h-full object-cover"
+                  width={0}
+                  height={0}
+                  sizes="1000vw"
                 />
               </div>
               <div className="p-6">

@@ -1,6 +1,7 @@
 import React from "react";
 import { BookOpen, Compass, Heart, Star } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 export const ChildrenSection = () => {
   return (
     <section id="children" className="py-16 bg-white w-full scroll-mt-20">
@@ -14,10 +15,13 @@ export const ChildrenSection = () => {
         </p>
         <div className="flex flex-col lg:flex-row gap-8 items-center">
           <div className="lg:w-1/2">
-            <img
-              src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+            <Image
+              src="/children-section.avif"
               alt="Anak dan remaja belajar"
               className="rounded-xl shadow-lg w-full"
+              width={0}
+              height={0}
+              sizes="1000vw"
             />
           </div>
           <div className="lg:w-1/2">
