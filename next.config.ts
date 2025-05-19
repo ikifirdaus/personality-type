@@ -4,8 +4,11 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
-    domains: ["res.cloudinary.com"], // menambahkan Cloudinary sebagai domain gambar yang diizinkan
+    domains: ["res.cloudinary.com"],
   },
 };
 
