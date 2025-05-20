@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { Menu, X, ChevronDown, User, LogOut, ShoppingCart } from "lucide-react";
 import Link from "next/link";
@@ -9,6 +11,9 @@ export const Navbar = () => {
   const [isSticky, setIsSticky] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
+
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isCartLoading, setIsCartLoading] = useState(false);
 
   const { data: session } = useSession();
   const router = useRouter();
@@ -27,8 +32,14 @@ export const Navbar = () => {
     setIsMobileDropdownOpen(!isMobileDropdownOpen);
 
   const handleLogout = async () => {
+    setIsLoggingOut(true);
     await signOut({ redirect: false });
     router.push("/");
+  };
+
+  const handleCartClick = () => {
+    setIsCartLoading(true);
+    router.push("/cart");
   };
 
   const navbarClasses = `w-full py-6 transition-all duration-300 ${
@@ -48,6 +59,7 @@ export const Navbar = () => {
   return (
     <nav className={navbarClasses}>
       <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
+        {/* Logo */}
         <div className="text-2xl font-bold text-indigo-700">NJPT</div>
 
         {/* Desktop Menu */}
@@ -77,19 +89,40 @@ export const Navbar = () => {
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md z-50">
-                  <Link
-                    href="/cart"
+                  <button
+                    onClick={handleCartClick}
+                    disabled={isCartLoading}
                     className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 border-b flex items-center gap-2"
                   >
-                    <ShoppingCart className="w-5 h-5" />
-                    Cart
-                  </Link>
+                    {isCartLoading ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
+                        <div className="text-gray-300">Loading...</div>
+                      </>
+                    ) : (
+                      <>
+                        <ShoppingCart className="w-5 h-5" />
+                        Cart
+                      </>
+                    )}
+                  </button>
+
                   <button
                     onClick={handleLogout}
+                    disabled={isLoggingOut}
                     className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
                   >
-                    <LogOut className="w-5 h-5" />
-                    Logout
+                    {isLoggingOut ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
+                        <div className="text-gray-300">Loading...</div>
+                      </>
+                    ) : (
+                      <>
+                        <LogOut className="w-5 h-5" />
+                        Logout
+                      </>
+                    )}
                   </button>
                 </div>
               )}
@@ -125,7 +158,7 @@ export const Navbar = () => {
               </Link>
             ))}
 
-            {/* Auth Section */}
+            {/* Auth Section Mobile */}
             {session?.user ? (
               <div className="w-full px-4">
                 <button
@@ -140,23 +173,40 @@ export const Navbar = () => {
                 </button>
                 {isMobileDropdownOpen && (
                   <div className="mt-2 bg-white shadow-md rounded-md border">
-                    <Link
-                      href="/cart"
-                      onClick={toggleMenu}
-                      className="px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 border-b flex items-center gap-2"
-                    >
-                      <ShoppingCart className="w-5 h-5" />
-                      Cart
-                    </Link>
                     <button
-                      onClick={() => {
-                        handleLogout();
-                        toggleMenu();
-                      }}
+                      onClick={handleCartClick}
+                      disabled={isCartLoading}
+                      className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 border-b flex items-center gap-2"
+                    >
+                      {isCartLoading ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
+                          <div className="text-gray-300">Loading...</div>
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingCart className="w-5 h-5" />
+                          Cart
+                        </>
+                      )}
+                    </button>
+
+                    <button
+                      onClick={handleLogout}
+                      disabled={isLoggingOut}
                       className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
                     >
-                      <LogOut className="w-5 h-5" />
-                      Logout
+                      {isLoggingOut ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
+                          <div className="text-gray-300">Loading...</div>
+                        </>
+                      ) : (
+                        <>
+                          <LogOut className="w-5 h-5" />
+                          Logout
+                        </>
+                      )}
                     </button>
                   </div>
                 )}
