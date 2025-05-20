@@ -1,11 +1,12 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Breadcrumb from "../ui/Breadcrumb/Breadcrumb";
-// import Link from "next/link";
 import Image from "next/image";
 import LayoutLandingDetail from "../layouts/LayoutLandingDetail";
 import { useRouter } from "next/navigation";
 import SkeletonCard from "../ui/Card/SkeletonCard";
+import useSWR from "swr";
+import { fetcher } from "@/lib/fetcher";
 
 const PRODUCTS_PER_PAGE = 12;
 
@@ -19,20 +20,14 @@ interface Product {
 }
 
 const ProdukPage = () => {
-  const [products, setProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-
   const [loadingProductId, setLoadingProductId] = useState<number | null>(null);
   const router = useRouter();
 
-  useEffect(() => {
-    async function fetchProducts() {
-      const res = await fetch("/api/landing/product");
-      const data: Product[] = await res.json();
-      setProducts(data);
-    }
-    fetchProducts();
-  }, []);
+  const { data: products = [], isLoading } = useSWR<Product[]>(
+    "/api/landing/product",
+    fetcher
+  );
 
   const totalPages = Math.ceil(products.length / PRODUCTS_PER_PAGE);
   const paginatedProducts = products.slice(
@@ -57,49 +52,53 @@ const ProdukPage = () => {
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-6">
-            {paginatedProducts.map((product) =>
-              loadingProductId === product.id ? (
-                <SkeletonCard key={product.id} />
-              ) : (
-                <div
-                  key={product.id}
-                  onClick={() => {
-                    setLoadingProductId(product.id);
-                    setTimeout(() => {
-                      router.push(`/produk/${product.id}`);
-                    }, 600); // delay untuk nunjukin skeleton
-                  }}
-                  className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
-                >
-                  <div className="h-48 overflow-hidden">
-                    <Image
-                      src={product.image ?? "/noPicture.png"}
-                      alt={product.productName}
-                      className="w-full h-full object-cover"
-                      width={0}
-                      height={0}
-                      sizes="1000vw"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-800 mb-3">
-                      {product.productName}
-                    </h3>
-                    <p className="text-gray-600 mb-4">
-                      {product.description
-                        ? product.description
-                            .split(" ")
-                            .slice(0, 20)
-                            .join(" ") + "..."
-                        : ""}
-                    </p>
-                    <span className="text-indigo-600 font-semibold hover:text-indigo-800 transition duration-300">
-                      Lihat detail →
-                    </span>
-                  </div>
-                </div>
-              )
-            )}
+            {isLoading
+              ? Array.from({ length: PRODUCTS_PER_PAGE }).map((_, i) => (
+                  <SkeletonCard key={i} />
+                ))
+              : paginatedProducts.map((product) =>
+                  loadingProductId === product.id ? (
+                    <SkeletonCard key={product.id} />
+                  ) : (
+                    <div
+                      key={product.id}
+                      onClick={() => {
+                        setLoadingProductId(product.id);
+                        setTimeout(() => {
+                          router.push(`/produk/${product.id}`);
+                        }, 600);
+                      }}
+                      className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                    >
+                      <div className="h-48 overflow-hidden">
+                        <Image
+                          src={product.image ?? "/noPicture.png"}
+                          alt={product.productName}
+                          className="w-full h-full object-cover"
+                          width={0}
+                          height={0}
+                          sizes="1000vw"
+                        />
+                      </div>
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-gray-800 mb-3">
+                          {product.productName}
+                        </h3>
+                        <p className="text-gray-600 mb-4">
+                          {product.description
+                            ? product.description
+                                .split(" ")
+                                .slice(0, 20)
+                                .join(" ") + "..."
+                            : ""}
+                        </p>
+                        <span className="text-indigo-600 font-semibold hover:text-indigo-800 transition duration-300">
+                          Lihat detail →
+                        </span>
+                      </div>
+                    </div>
+                  )
+                )}
           </div>
 
           {/* Pagination */}
