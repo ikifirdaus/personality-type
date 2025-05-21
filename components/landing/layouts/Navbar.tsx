@@ -52,7 +52,7 @@ export const Navbar = () => {
     { href: "#consultation", label: "Konsultasi" },
     { href: "#children", label: "Untuk Anak & Remaja" },
     { href: "/produk", label: "Produk" },
-    { href: "#blog", label: "Artikel" },
+    { href: "/artikel", label: "Artikel" },
     { href: "#contact", label: "Kontak" },
   ];
 

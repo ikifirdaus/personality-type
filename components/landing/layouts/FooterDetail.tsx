@@ -97,7 +97,7 @@ export default function FooterDetail() {
                 </li>
                 <li>
                   <a
-                    href="#blog"
+                    href="/artikel"
                     className="text-gray-400 hover:text-white transition duration-300"
                   >
                     Artikel
