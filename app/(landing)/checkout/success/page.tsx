@@ -83,7 +83,7 @@ export default async function CheckoutSuccessPage({
             </p>
             <Link
               href={`/invoice/${transactionId}`}
-              className="w-full inline-block border border-green-500 bg-green-500 text-white text-[15px] px-4 py-2 rounded-lg hover:bg-green-700  hover:text-white transition mb-4 mt-4 flex items-center justify-center gap-2"
+              className="w-full border border-green-500 bg-green-500 text-white text-[15px] px-4 py-2 rounded-lg hover:bg-green-700  hover:text-white transition mb-4 mt-4 flex items-center justify-center gap-2"
             >
               <File size={20} />
               Lihat Invoice
@@ -92,7 +92,7 @@ export default async function CheckoutSuccessPage({
             {konsultasiPasangan && (
               <Link
                 href="/atur-jadwal-konsul-pasangan"
-                className="w-full inline-block border border-indigo-500 bg-indigo-500 text-white text-[15px] px-4 py-2 rounded-lg hover:bg-indigo-700 transition mb-4 flex items-center justify-center gap-2"
+                className="w-full border border-indigo-500 bg-indigo-500 text-white text-[15px] px-4 py-2 rounded-lg hover:bg-indigo-700 transition mb-4 flex items-center justify-center gap-2"
               >
                 <BookTextIcon size={20} />
                 Atur Jadwal Konsultasi
@@ -102,7 +102,7 @@ export default async function CheckoutSuccessPage({
             {konsultasiDewasa && (
               <Link
                 href="/atur-jadwal-konsul-dewasa"
-                className="w-full inline-block border border-indigo-500 bg-indigo-500 text-white text-[15px] px-4 py-2 rounded-lg hover:bg-indigo-700 transition mb-4 flex items-center justify-center gap-2"
+                className="w-full border border-indigo-500 bg-indigo-500 text-white text-[15px] px-4 py-2 rounded-lg hover:bg-indigo-700 transition mb-4 flex items-center justify-center gap-2"
               >
                 <BookTextIcon size={20} />
                 Atur Jadwal Konsultasi
@@ -112,7 +112,7 @@ export default async function CheckoutSuccessPage({
             {konsultasiAnak && (
               <Link
                 href="/atur-jadwal-konsul-anak"
-                className="w-full inline-block border border-indigo-500 bg-indigo-500 text-white text-[15px] px-4 py-2 rounded-lg hover:bg-indigo-700 transition mb-4 flex items-center justify-center gap-2"
+                className="w-full border border-indigo-500 bg-indigo-500 text-white text-[15px] px-4 py-2 rounded-lg hover:bg-indigo-700 transition mb-4 flex items-center justify-center gap-2"
               >
                 <BookTextIcon size={20} />
                 Atur Jadwal Konsultasi
@@ -122,7 +122,7 @@ export default async function CheckoutSuccessPage({
             {hasPersonalityTest && (
               <Link
                 href="/tes-personality"
-                className="w-full inline-block border border-indigo-500 bg-indigo-500 text-white text-[15px] px-4 py-2 rounded-lg hover:bg-indigo-700 transition mb-4 flex items-center justify-center gap-2"
+                className="w-full border border-indigo-500 bg-indigo-500 text-white text-[15px] px-4 py-2 rounded-lg hover:bg-indigo-700 transition mb-4 flex items-center justify-center gap-2"
               >
                 <User2 size={20} />
                 Mulai Tes Personality
