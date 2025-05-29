@@ -65,14 +65,6 @@ export default function FooterDetail() {
                 </li>
                 <li>
                   <a
-                    href="#test"
-                    className="text-gray-400 hover:text-white transition duration-300"
-                  >
-                    Tes Kepribadian
-                  </a>
-                </li>
-                <li>
-                  <a
                     href="#consultation"
                     className="text-gray-400 hover:text-white transition duration-300"
                   >

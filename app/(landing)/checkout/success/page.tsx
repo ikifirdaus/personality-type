@@ -61,7 +61,9 @@ export default async function CheckoutSuccessPage({
   const konsultasiAnak = productNames.some((name) =>
     name.includes("konsultasi anak")
   );
-  const hasPersonalityTest = productNames.some((name) => name.includes("tes"));
+  const hasPersonalityTest = productNames.some((name) =>
+    name.includes("personality test")
+  );
 
   return (
     <LayoutLandingDetail>
