@@ -49,9 +49,18 @@ const BookingPage = () => {
 
   useEffect(() => {
     async function fetchNotScheduledProducts() {
-      const response = await fetch("/api/schedule/not-scheduled");
-      const data = await response.json();
-      setNotScheduledProducts(data || []);
+      try {
+        const response = await fetch("/api/schedule/not-scheduled");
+
+        if (!response.ok) {
+          throw new Error(`Fetch failed with status ${response.status}`);
+        }
+
+        const data = await response.json();
+        setNotScheduledProducts(data.unscheduledProducts || []);
+      } catch (err) {
+        console.error("❌ Error fetching not scheduled products:", err);
+      }
     }
 
     fetchNotScheduledProducts();

@@ -19,12 +19,15 @@ export async function GET(req: Request) {
         userId,
       },
       select: {
+        transactionId: true,
         productId: true,
       },
     });
 
+    // console.log("✅ scheduledProductIds", scheduledProductIds);
+
     const scheduledIdsSet = new Set(
-      scheduledProductIds.map((s) => s.productId)
+      scheduledProductIds.map((s) => `${s.transactionId}-${s.productId}`)
     );
 
     // Ambil semua transaksi user beserta produknya
@@ -41,6 +44,8 @@ export async function GET(req: Request) {
       },
     });
 
+    // console.log("✅ transactions", transactions);
+
     // Filter produk yang belum dijadwalkan
     const unscheduledProducts: {
       transactionId: number;
@@ -51,7 +56,8 @@ export async function GET(req: Request) {
 
     for (const transaction of transactions) {
       for (const item of transaction.transactionItem) {
-        if (!scheduledIdsSet.has(item.productId)) {
+        const key = `${transaction.id}-${item.productId}`;
+        if (!scheduledIdsSet.has(key)) {
           unscheduledProducts.push({
             transactionId: transaction.id,
             productId: item.productId,
@@ -62,7 +68,7 @@ export async function GET(req: Request) {
       }
     }
 
-    return NextResponse.json(unscheduledProducts);
+    return NextResponse.json({ unscheduledProducts });
   } catch (error) {
     console.error("Error fetching unscheduled products:", error);
     return NextResponse.json(
