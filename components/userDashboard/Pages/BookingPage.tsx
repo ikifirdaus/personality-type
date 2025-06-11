@@ -67,9 +67,13 @@ const BookingPage = () => {
     },
     { header: "Nama Produk", accessor: "productName" },
     {
-      header: "Tanggal Booking",
+      header: "Tanggal & Jam Booking",
       accessor: "scheduledDate",
-      cell: (row: Schedule) => new Date(row.scheduledDate).toLocaleDateString(),
+      cell: (row: Schedule) =>
+        new Date(row.scheduledDate).toLocaleString("id-ID", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        }),
     },
     { header: "Status", accessor: "status" },
   ];
