@@ -31,7 +31,13 @@ export async function middleware(req: NextRequest) {
   }
 
   // Blokir akses ke /personalityTest jika bukan USER
-  if (pathname.startsWith("/personalityTest") && token.role !== "USER") {
+  if (
+    (pathname.startsWith("/user/dashboard") ||
+      pathname.startsWith("/user/transaksi") ||
+      pathname.startsWith("/user/booking") ||
+      pathname.startsWith("/user/personalityTest")) &&
+    token.role !== "USER"
+  ) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
@@ -50,5 +56,11 @@ export async function middleware(req: NextRequest) {
 
 // Terapkan middleware hanya untuk route yang perlu dicegah
 export const config = {
-  matcher: ["/admin/:path*", "/personalityTest/:path*", "/signin", "/register"],
+  matcher: [
+    "/admin/:path*",
+    "/user/:path*",
+    "/personalityTest/:path*",
+    "/signin",
+    "/register",
+  ],
 };

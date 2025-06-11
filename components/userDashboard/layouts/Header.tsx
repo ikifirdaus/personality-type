@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { LogOut, User, Menu } from "lucide-react";
+import { LogOut, User, Menu, ShoppingBasket } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -11,6 +12,14 @@ interface HeaderProps {
 const Header = ({ onMenuClick }: HeaderProps) => {
   const { data: session } = useSession();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const handleClick = () => {
+    setIsLoading(true);
+    router.push("/produk");
+  };
 
   return (
     <header className="bg-white border-b border-gray-200 text-gray-700 h-16">
@@ -33,13 +42,23 @@ const Header = ({ onMenuClick }: HeaderProps) => {
 
           {isDropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 border border-gray-200">
-              {/* <button
-                onClick={() => signOut()}
+              <button
+                onClick={handleClick}
+                disabled={isLoading}
                 className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 w-full"
               >
-                <LogOut className="w-4 h-4 mr-2" />
-                Logout
-              </button> */}
+                {isLoading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
+                    <span className="text-gray-300">Loading...</span>
+                  </div>
+                ) : (
+                  <>
+                    <ShoppingBasket className="w-4 h-4 mr-2" />
+                    <span>Produk</span>
+                  </>
+                )}
+              </button>
               <button
                 onClick={
                   () => signOut({ callbackUrl: "/" }) // akan langsung redirect ke halaman utama

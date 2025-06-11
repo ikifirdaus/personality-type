@@ -2,7 +2,15 @@
 
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
-import { Menu, X, ChevronDown, User, LogOut, ShoppingCart } from "lucide-react";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  User,
+  LogOut,
+  ShoppingCart,
+  LayoutDashboard,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
@@ -17,6 +25,8 @@ export const Navbar = () => {
 
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isCartLoading, setIsCartLoading] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const { data: cartData } = useSWR("/api/landing/cart", fetcher, {
     refreshInterval: 5000,
@@ -38,6 +48,11 @@ export const Navbar = () => {
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
   const toggleMobileDropdown = () =>
     setIsMobileDropdownOpen(!isMobileDropdownOpen);
+
+  const handleClick = () => {
+    setIsLoading(true);
+    router.push("/user/dashboard");
+  };
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
@@ -112,6 +127,23 @@ export const Navbar = () => {
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md z-50">
+                  <button
+                    onClick={handleClick}
+                    disabled={isLoading}
+                    className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                  >
+                    {isLoading ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
+                        <span className="text-gray-300">Loading...</span>
+                      </>
+                    ) : (
+                      <>
+                        <LayoutDashboard />
+                        <span>Dashboard</span>
+                      </>
+                    )}
+                  </button>
                   <button
                     onClick={handleLogout}
                     disabled={isLoggingOut}

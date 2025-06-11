@@ -51,10 +51,8 @@ const Sidebar = () => {
             <Link
               key={item.path}
               href={item.path}
-              className={`flex items-center px-6 py-3 transition delay-75 duration-300 ease-in-out hover:bg-slate-700 hover:mx-2 hover:transition-all my-1 rounded-lg ${
-                pathname === item.path
-                  ? "bg-slate-700 mx-2 rounded-lg my-1"
-                  : ""
+              className={`flex items-center px-6 py-3 transition-all duration-300 ease-in-out hover:bg-slate-700 hover:mx-2 my-1 rounded-lg ${
+                pathname === item.path ? "bg-slate-700 mx-2 " : ""
               }`}
             >
               <>
