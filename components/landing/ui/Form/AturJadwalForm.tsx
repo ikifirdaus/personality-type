@@ -61,7 +61,7 @@ export default function AturJadwalForm({
       }
 
       toast.success("Jadwal berhasil dibuat!");
-      router.push("/jadwal-sukses");
+      router.push("/user/booking");
     } catch (error: any) {
       toast.error(error.message || "Terjadi kesalahan.");
     } finally {

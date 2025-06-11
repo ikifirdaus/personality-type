@@ -2,9 +2,7 @@
 
 import TitleBreadcrumb from "@/components/dashboard/layouts/TitleBreadcrumb";
 import Table from "@/components/dashboard/ui/Table/Table";
-// import { Trash2, FilePenLine } from "lucide-react";
 import React, { useState, useEffect } from "react";
-// import ButtonIcon from "@/components/dashboard/ui/Button/ButtonIcon";
 import Pagination from "@/components/dashboard/ui/Pagination/Pagination";
 import { useSearchParams } from "next/navigation";
 import SearchColumn from "@/components/dashboard/ui/Search/SearchColumn";
@@ -13,10 +11,12 @@ import Skeleton from "@/components/dashboard/ui/Skeleton/Skeleton";
 import { Schedule } from "@/types/schedule";
 import Layout from "../layouts/Layout";
 import CardMain from "../layouts/CardMain";
+import Link from "next/link";
 
 const BookingPage = () => {
   const [loading, setLoading] = useState(true);
   const [schedules, setSchedules] = useState<Schedule[]>([]);
+  const [notScheduledProducts, setNotScheduledProducts] = useState<any[]>([]);
   const [totalItems, setTotalItems] = useState(0);
   const searchParams = useSearchParams();
 
@@ -47,19 +47,15 @@ const BookingPage = () => {
     fetchSchedule();
   }, [page, perPage, query, fromDate, toDate]);
 
-  // const handleDelete = async (id: number) => {
-  //   if (confirm("Are you sure you want to delete this schedule?")) {
-  //     const response = await fetch(`/api/schedule/${id}`, {
-  //       method: "DELETE",
-  //     });
+  useEffect(() => {
+    async function fetchNotScheduledProducts() {
+      const response = await fetch("/api/schedule/not-scheduled");
+      const data = await response.json();
+      setNotScheduledProducts(data || []);
+    }
 
-  //     if (response.ok) {
-  //       setSchedules(schedules.filter((schedule) => schedule.id !== id));
-  //     } else {
-  //       alert("Failed to delete the schedule.");
-  //     }
-  //   }
-  // };
+    fetchNotScheduledProducts();
+  }, []);
 
   const hasNextPage = page * perPage < totalItems;
   const hasPrevPage = page > 1;
@@ -76,24 +72,17 @@ const BookingPage = () => {
       cell: (row: Schedule) => new Date(row.scheduledDate).toLocaleDateString(),
     },
     { header: "Status", accessor: "status" },
-    // {
-    //   header: "Action",
-    //   accessor: "action",
-    //   cell: (row: Schedule) => (
-    //     <div className="flex items-center gap-2">
-    //       <ButtonIcon
-    //         url={`/admin/product/${row.id}`}
-    //         icon={<FilePenLine className="w-4 h-4" />}
-    //       />
-    //       <button
-    //         onClick={() => handleDelete(row.id)}
-    //         className="p-1 bg-red-400 text-white rounded hover:bg-red-600"
-    //       >
-    //         <Trash2 className="w-4 h-4" />
-    //       </button>
-    //     </div>
-    //   ),
-    // },
+  ];
+
+  const unscheduledColumns = [
+    { header: "No", accessor: "no" },
+    { header: "Nama Produk", accessor: "productName" },
+    { header: "Tanggal Pembelian", accessor: "createdAt" },
+    {
+      header: "Aksi",
+      accessor: "action",
+      cell: (row: any) => row.action, // render JSX-nya
+    },
   ];
 
   return (
@@ -112,11 +101,9 @@ const BookingPage = () => {
             {loading ? (
               <Skeleton className="h-10 w-full md:w-64 mb-2" />
             ) : (
-              <>
-                <div className="w-full">
-                  <SearchColumn />
-                </div>
-              </>
+              <div className="w-full">
+                <SearchColumn />
+              </div>
             )}
           </div>
         </div>
@@ -143,6 +130,32 @@ const BookingPage = () => {
                 totalItems={totalItems}
               />
             </div>
+
+            {notScheduledProducts.length > 0 && (
+              <div className="mt-8">
+                <h2 className="text-lg font-semibold mb-4">
+                  Belum Dijadwalkan
+                </h2>
+                <Table
+                  data={notScheduledProducts.map((item, index) => ({
+                    no: index + 1,
+                    productName: item.productName,
+                    createdAt: new Date(item.createdAt).toLocaleDateString(),
+                    action: (
+                      <Link
+                        href={`/atur-jadwal?transactionId=${item.transactionId}&productId=${item.productId}`}
+                        className="text-blue-500 hover:underline"
+                      >
+                        Buat Jadwal
+                      </Link>
+                    ),
+                  }))}
+                  columns={unscheduledColumns}
+                  currentPage={1}
+                  perPage={notScheduledProducts.length}
+                />
+              </div>
+            )}
           </>
         )}
       </CardMain>
