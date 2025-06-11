@@ -2,12 +2,16 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(
-  req: Request,
-  { params }: { params: { slug: string } }
-) {
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const slug = url.pathname.split("/").pop();
+
+  if (!slug || typeof slug !== "string") {
+    return NextResponse.json({ error: "Invalid slug" }, { status: 400 });
+  }
+
   const article = await prisma.article.findUnique({
-    where: { slug: params.slug },
+    where: { slug },
     include: { user: true },
   });
 

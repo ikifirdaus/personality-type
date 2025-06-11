@@ -1,12 +1,11 @@
-// app/api/landing/product/[id]/route.ts
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
-  const id = Number(params.id);
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const idStr = url.pathname.split("/").pop();
+  const id = Number(idStr);
+
   if (isNaN(id)) {
     return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
   }

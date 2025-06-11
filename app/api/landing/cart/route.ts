@@ -37,3 +37,19 @@ export async function POST(req: Request) {
 
   return NextResponse.json({ success: true });
 }
+
+export async function GET() {
+  const session = await getServerSession(authOptions);
+
+  if (!session || session.user.role !== "USER") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const count = await prisma.cartItem.count({
+    where: {
+      userId: Number(session.user.id),
+    },
+  });
+
+  return NextResponse.json({ count });
+}

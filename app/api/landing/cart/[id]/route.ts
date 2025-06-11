@@ -3,16 +3,14 @@ import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request: Request, context: any) {
+  const { id } = context.params; // ⬅️ akses params DI DALAM function body
+  const cartItemId = Number(id);
+
   const session = await getServerSession(authOptions);
   if (!session || session.user.role !== "USER") {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
-
-  const cartItemId = Number(params.id);
 
   const cartItem = await prisma.cartItem.findUnique({
     where: { id: cartItemId },

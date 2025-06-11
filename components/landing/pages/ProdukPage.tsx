@@ -24,6 +24,8 @@ const ProdukPage = () => {
   const [loadingProductId, setLoadingProductId] = useState<number | null>(null);
   const router = useRouter();
 
+  const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
+
   const { data: products = [], isLoading } = useSWR<Product[]>(
     "/api/landing/product",
     fetcher
@@ -70,16 +72,30 @@ const ProdukPage = () => {
                       }}
                       className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                     >
-                      <div className="h-48 overflow-hidden">
+                      <div className="h-48 overflow-hidden relative">
+                        {!loadedImages[product.id] && (
+                          <div className="absolute inset-0 bg-gray-200 animate-pulse z-0" />
+                        )}
                         <Image
                           src={product.image ?? "/noPicture.png"}
                           alt={product.productName}
-                          className="w-full h-full object-cover"
+                          className={`w-full h-full object-cover transition-opacity duration-300 ${
+                            loadedImages[product.id]
+                              ? "opacity-100"
+                              : "opacity-0"
+                          }`}
                           width={0}
                           height={0}
                           sizes="1000vw"
+                          onLoad={() =>
+                            setLoadedImages((prev) => ({
+                              ...prev,
+                              [product.id]: true,
+                            }))
+                          }
                         />
                       </div>
+
                       <div className="p-6">
                         <h3 className="text-xl font-bold text-gray-800 mb-3">
                           {product.productName}

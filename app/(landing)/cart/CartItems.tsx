@@ -134,9 +134,9 @@ export default function CartItems({
         <h2 className="text-xl font-bold">
           Total: Rp {total.toLocaleString("id-ID")}
         </h2>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 md:flex-row flex-col space-y-2 md:space-y-0">
           <Link href="/produk" className="text-gray-700 underline">
-            Kembali
+            Kembali ke produk
           </Link>
 
           <button

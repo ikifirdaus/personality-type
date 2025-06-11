@@ -21,6 +21,7 @@ model Product {
 
   cartItem          CartItem[] 
   transactionItem   TransactionItem[]
+  schedule          Schedule[]
 
   @@map("product")
 }
@@ -50,7 +51,7 @@ model Transaction {
   user                  User              @relation(fields: [userId], references: [id])
   transactionItem       TransactionItem[] // isi detail transaksi
   invoice               Invoice?      
-
+  schedule              Schedule[]
 
   @@map("transaction")
 }
@@ -82,7 +83,24 @@ model Invoice {
   @@map("invoice")
 }
 
+model Schedule {
+  id             Int       @id @default(autoincrement())
+  userId         Int
+  productId      Int
+  transactionId  Int
+  scheduledDate  DateTime  // tanggal & jam jadwal
+  note           String?   // opsional catatan user
+  status         String
+  createdAt      DateTime  @default(now())
 
+  user           User       @relation(fields: [userId], references: [id])
+  product        Product    @relation(fields: [productId], references: [id])
+  transaction    Transaction @relation(fields: [transactionId], references: [id])
+
+  @@unique([userId, productId, transactionId]) // 1 jadwal per pembelian
+
+  @@map("schedule")
+}
 
 model Article {
   id               Int        @id @default(autoincrement())
@@ -117,6 +135,7 @@ model User {
   articles    Article[]  // one-to-many: satu user bisa punya banyak artikel
   cartItem    CartItem[] 
   transaction Transaction[]
+  schedule    Schedule[]
 
   @@map("user")
 }

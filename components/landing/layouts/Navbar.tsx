@@ -1,10 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import useSWR from "swr";
 import { Menu, X, ChevronDown, User, LogOut, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,12 +18,17 @@ export const Navbar = () => {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isCartLoading, setIsCartLoading] = useState(false);
 
+  const { data: cartData } = useSWR("/api/landing/cart", fetcher, {
+    refreshInterval: 5000,
+  });
+  const cartCount = cartData?.count || 0;
+
   const { data: session } = useSession();
   const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsSticky(window.scrollY > 10);
+      setIsSticky(window.scrollY > 70);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -42,8 +50,10 @@ export const Navbar = () => {
     router.push("/cart");
   };
 
-  const navbarClasses = `w-full py-6 transition-all duration-300 ${
-    isSticky ? "fixed top-0 bg-white shadow-md z-50" : "bg-transparent"
+  const navbarClasses = `w-full py-6 transition-all duration-500 transform ${
+    isSticky
+      ? "fixed top-0 bg-white shadow-md z-50 translate-y-0"
+      : "relative bg-transparent"
   }`;
 
   const menuItems = [
@@ -76,7 +86,20 @@ export const Navbar = () => {
         </div>
 
         {/* Desktop Auth Section */}
-        <div className="hidden md:flex font-medium relative">
+        <div className="hidden md:flex font-medium relative items-center gap-4">
+          {/* Cart Icon */}
+          <button
+            onClick={handleCartClick}
+            className="relative text-gray-700 hover:text-indigo-600"
+          >
+            <ShoppingCart className="w-5 h-5" />
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-xs text-white rounded-full w-4 h-4 flex items-center justify-center">
+                {cartCount}
+              </span>
+            )}
+          </button>
+
           {session?.user ? (
             <div className="relative">
               <button
@@ -89,24 +112,6 @@ export const Navbar = () => {
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md z-50">
-                  <button
-                    onClick={handleCartClick}
-                    disabled={isCartLoading}
-                    className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 border-b flex items-center gap-2"
-                  >
-                    {isCartLoading ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
-                        <div className="text-gray-300">Loading...</div>
-                      </>
-                    ) : (
-                      <>
-                        <ShoppingCart className="w-5 h-5" />
-                        Cart
-                      </>
-                    )}
-                  </button>
-
                   <button
                     onClick={handleLogout}
                     disabled={isLoggingOut}
@@ -187,6 +192,11 @@ export const Navbar = () => {
                         <>
                           <ShoppingCart className="w-5 h-5" />
                           Cart
+                          {cartCount > 0 && (
+                            <span className="ml-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
+                              {cartCount}
+                            </span>
+                          )}
                         </>
                       )}
                     </button>

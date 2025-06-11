@@ -26,6 +26,8 @@ interface Article {
 const ArtikelPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
+  const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
+
   const [loadingArticleId, setLoadingArticleId] = useState<number | null>(null);
   const router = useRouter();
 
@@ -72,16 +74,30 @@ const ArtikelPage = () => {
                       }}
                       className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
                     >
-                      <div className="h-48 overflow-hidden">
+                      <div className="h-48 overflow-hidden relative">
+                        {!loadedImages[article.id] && (
+                          <div className="absolute inset-0 bg-gray-200 animate-pulse z-0" />
+                        )}
                         <Image
                           src={article.ogImage ?? "/noPicture.png"}
                           alt={article.title}
-                          className="w-full h-full object-cover"
+                          className={`w-full h-full object-cover transition-opacity duration-300 ${
+                            loadedImages[article.id]
+                              ? "opacity-100"
+                              : "opacity-0"
+                          }`}
                           width={0}
                           height={0}
-                          sizes="1000vw"
+                          sizes="100vw"
+                          onLoad={() =>
+                            setLoadedImages((prev) => ({
+                              ...prev,
+                              [article.id]: true,
+                            }))
+                          }
                         />
                       </div>
+
                       <div className="p-6">
                         <div className="flex items-center text-gray-400 mb-3 text-[15px] gap-4">
                           <div className="flex items-center">
