@@ -11,7 +11,8 @@ import { Toast } from "../Toast/Toast";
 import { Article } from "@/types/article";
 import Image from "next/image";
 import Textarea from "../TextArea/Textarea";
-import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
+import { SimpleEditor } from "@/components/(tiptap)/tiptap-templates/simple/simple-editor";
+// import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required"),
