@@ -18,7 +18,7 @@ const Sidebar = () => {
     { icon: ListCollapse, label: "Riwayat Booking", path: "/user/booking" },
     {
       icon: BetweenVerticalStart,
-      label: "Personaity Test",
+      label: "Personality Test",
       path: "/user/personalityTest",
     },
   ];

@@ -12,7 +12,8 @@ import { Schedule } from "@/types/schedule";
 import Layout from "../layouts/Layout";
 import CardMain from "../layouts/CardMain";
 import Link from "next/link";
-import ClearFiltersButton from "@/components/dashboard/ui/Button/ClearFiltersButton";
+import Modal from "@/components/dashboard/ui/Modal/Modal";
+import ClearFiltersButton from "../ui/Button/ClearFiltersButton";
 
 const BookingPage = () => {
   const [loading, setLoading] = useState(true);
@@ -20,6 +21,37 @@ const BookingPage = () => {
   const [notScheduledProducts, setNotScheduledProducts] = useState<any[]>([]);
   const [totalItems, setTotalItems] = useState(0);
   const searchParams = useSearchParams();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedSchedule, setSelectedSchedule] = useState<Schedule | null>(
+    null
+  );
+  const [newStatus, setNewStatus] = useState("");
+
+  const openModal = (schedule: Schedule) => {
+    setSelectedSchedule(schedule);
+    setNewStatus(schedule.status || "");
+    setIsModalOpen(true);
+  };
+
+  const handleSubmit = async () => {
+    if (!selectedSchedule) return;
+
+    const response = await fetch(`/api/schedule/${selectedSchedule.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: newStatus }),
+    });
+
+    if (response.ok) {
+      setIsModalOpen(false);
+      location.reload(); // Atau bisa fetch ulang jadwal
+    } else {
+      console.error("Gagal update status");
+    }
+  };
 
   const page = parseInt(searchParams.get("page") || "1");
   const perPage = parseInt(searchParams.get("per_page") || "10");
@@ -75,6 +107,11 @@ const BookingPage = () => {
       header: "No",
       accessor: "no",
     },
+    {
+      header: "Nama Customer",
+      accessor: "name",
+      cell: (row: Schedule) => row.user?.name || "-", // tambahkan ini
+    },
     { header: "Nama Produk", accessor: "productName" },
     {
       header: "Tanggal & Jam Booking",
@@ -105,6 +142,12 @@ const BookingPage = () => {
             >
               {status}
             </span>
+            <button
+              onClick={() => openModal(row)}
+              className="text-blue-500 text-sm hover:underline"
+            >
+              Edit
+            </button>
           </div>
         );
       },
@@ -113,6 +156,7 @@ const BookingPage = () => {
 
   const unscheduledColumns = [
     { header: "No", accessor: "no" },
+    { header: "Nama Customer", accessor: "name" },
     { header: "Nama Produk", accessor: "productName" },
     {
       header: "Tanggal Pembelian",
@@ -163,6 +207,7 @@ const BookingPage = () => {
               data={schedules.map((item, index) => ({
                 ...item,
                 no: (page - 1) * perPage + index + 1,
+                name: item.user?.name || "-",
                 productName: item.product?.productName || "Unknown",
               }))}
               columns={columns}
@@ -186,6 +231,7 @@ const BookingPage = () => {
                 <Table
                   data={notScheduledProducts.map((item, index) => ({
                     no: index + 1,
+                    name: item.user?.name || "-",
                     productName: item.productName,
                     createdAt: new Date(item.createdAt).toLocaleDateString(),
                     action: (
@@ -205,6 +251,29 @@ const BookingPage = () => {
             )}
           </>
         )}
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          title="Ubah Status Jadwal"
+        >
+          <div className="flex flex-col gap-4">
+            <select
+              className="border rounded px-3 py-2"
+              value={newStatus}
+              onChange={(e) => setNewStatus(e.target.value)}
+            >
+              <option value="">Pilih status</option>
+              <option value="BOOKED">BOOKED</option>
+              <option value="DONE">DONE</option>
+            </select>
+            <button
+              onClick={handleSubmit}
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            >
+              Simpan
+            </button>
+          </div>
+        </Modal>
       </CardMain>
     </Layout>
   );

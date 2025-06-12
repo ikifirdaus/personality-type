@@ -7,17 +7,19 @@ export async function GET(req: Request) {
   try {
     const session = await getServerSession(authOptions);
 
-    if (!session || session.user.role !== "USER") {
+    if (
+      !session ||
+      (session.user.role !== "USER" && session.user.role !== "ADMIN")
+    ) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const isAdmin = session.user.role === "ADMIN";
     const userId = parseInt(session.user.id);
 
     // Ambil semua productId yang sudah punya schedule oleh user ini
     const scheduledProductIds = await prisma.schedule.findMany({
-      where: {
-        userId,
-      },
+      where: isAdmin ? {} : { userId },
       select: {
         transactionId: true,
         productId: true,
@@ -32,10 +34,9 @@ export async function GET(req: Request) {
 
     // Ambil semua transaksi user beserta produknya
     const transactions = await prisma.transaction.findMany({
-      where: {
-        userId,
-      },
+      where: isAdmin ? {} : { userId },
       include: {
+        user: true,
         transactionItem: {
           include: {
             product: true,
@@ -52,6 +53,9 @@ export async function GET(req: Request) {
       productId: number;
       productName: string;
       createdAt: Date;
+      user?: {
+        name: string;
+      };
     }[] = [];
 
     for (const transaction of transactions) {
@@ -63,6 +67,9 @@ export async function GET(req: Request) {
             productId: item.productId,
             productName: item.product.productName,
             createdAt: transaction.createdAt,
+            user: transaction.user
+              ? { name: transaction.user.name }
+              : undefined,
           });
         }
       }

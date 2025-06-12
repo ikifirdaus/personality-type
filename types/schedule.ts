@@ -1,11 +1,14 @@
-export type Schedule = {
+import { Product, User } from "@prisma/client";
+
+export interface Schedule {
   id: number;
   userId: number;
-  productId: number;
   transactionId: number;
+  productId: number;
   scheduledDate: Date;
   status: string;
-  product?: {
-    productName: string;
-  };
-};
+  createdAt: Date;
+  updatedAt: Date;
+  product?: Product;
+  user?: User; // ✅ tambahkan ini
+}

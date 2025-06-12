@@ -13,6 +13,7 @@ import SearchColumn from "@/components/dashboard/ui/Search/SearchColumn";
 import TableSkeleton from "@/components/dashboard/ui/TableSkeleton/TableSkeleton";
 import Skeleton from "@/components/dashboard/ui/Skeleton/Skeleton";
 import { User } from "@/types/user";
+import ClearFiltersButton from "../ui/Button/ClearFiltersButton";
 
 const UserPage = () => {
   const [loading, setLoading] = useState(true);
@@ -120,9 +121,12 @@ const UserPage = () => {
             {loading ? (
               <Skeleton className="h-10 w-full md:w-64 mb-2" />
             ) : (
-              <div className="w-full">
-                <SearchColumn />
-              </div>
+              <>
+                <div className="w-full">
+                  <SearchColumn />
+                </div>
+                <ClearFiltersButton />
+              </>
             )}
           </div>
 

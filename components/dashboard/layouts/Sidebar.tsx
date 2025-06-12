@@ -18,8 +18,8 @@ const Sidebar = () => {
       label: "Dashboard",
       path: "/admin/dashboard",
     },
-    { icon: ListChecks, label: "Result", path: "/admin/result" },
-    { icon: ListCollapse, label: "Answers", path: "/admin/answer" },
+    { icon: ListChecks, label: "Riwayat Transaksi", path: "/admin/transaksi" },
+    { icon: ListCollapse, label: "Riwayat Booking", path: "/admin/booking" },
     {
       icon: BetweenVerticalStart,
       label: "Cognitive",

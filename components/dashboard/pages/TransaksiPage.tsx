@@ -8,10 +8,10 @@ import { useSearchParams } from "next/navigation";
 import SearchColumn from "@/components/dashboard/ui/Search/SearchColumn";
 import TableSkeleton from "@/components/dashboard/ui/TableSkeleton/TableSkeleton";
 import Skeleton from "@/components/dashboard/ui/Skeleton/Skeleton";
+import { TransactionItemWithDetails } from "@/types/TransactionItemWithDetails";
 import Layout from "../layouts/Layout";
 import CardMain from "../layouts/CardMain";
-import { TransactionItemWithDetails } from "@/types/TransactionItemWithDetails";
-import ClearFiltersButton from "@/components/dashboard/ui/Button/ClearFiltersButton";
+import ClearFiltersButton from "../ui/Button/ClearFiltersButton";
 
 const TransaksiPage = () => {
   const [loading, setLoading] = useState(true);
@@ -49,15 +49,17 @@ const TransaksiPage = () => {
   }, [page, perPage, query, fromDate, toDate]);
 
   // const handleDelete = async (id: number) => {
-  //   if (confirm("Are you sure you want to delete this schedule?")) {
-  //     const response = await fetch(`/api/schedule/${id}`, {
+  //   if (confirm("Are you sure you want to delete this transaction?")) {
+  //     const response = await fetch(`/api/transaction/${id}`, {
   //       method: "DELETE",
   //     });
 
   //     if (response.ok) {
-  //       setSchedules(schedules.filter((schedule) => schedule.id !== id));
+  //       setTransactions(
+  //         transactions.filter((transactionItem) => transactionItem.id !== id)
+  //       );
   //     } else {
-  //       alert("Failed to delete the schedule.");
+  //       alert("Failed to delete the transaction.");
   //     }
   //   }
   // };
@@ -67,6 +69,12 @@ const TransaksiPage = () => {
 
   const columns = [
     { header: "No", accessor: "no" },
+    {
+      header: "Nama Customer",
+      accessor: "name",
+      cell: (row: TransactionItemWithDetails) =>
+        row.transaction?.user?.name || "Unknown",
+    },
     { header: "Nama Produk", accessor: "productName" },
     {
       header: "Jumlah",
@@ -90,6 +98,24 @@ const TransaksiPage = () => {
       cell: (row: TransactionItemWithDetails) =>
         new Date(row.createdAt).toLocaleDateString("id-ID"),
     },
+    // {
+    //   header: "Action",
+    //   accessor: "action",
+    //   cell: (row: TransactionItemWithDetails) => (
+    //     <div className="flex items-center gap-2">
+    //       <ButtonIcon
+    //         url={`/admin/transaksi/${row.id}`}
+    //         icon={<FilePenLine className="w-4 h-4" />}
+    //       />
+    //       <button
+    //         onClick={() => handleDelete(row.id)}
+    //         className="p-1 bg-red-400 text-white rounded hover:bg-red-600"
+    //       >
+    //         <Trash2 className="w-4 h-4" />
+    //       </button>
+    //     </div>
+    //   ),
+    // },
   ];
 
   return (

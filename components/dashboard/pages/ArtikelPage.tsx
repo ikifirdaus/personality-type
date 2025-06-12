@@ -15,6 +15,7 @@ import Skeleton from "@/components/dashboard/ui/Skeleton/Skeleton";
 import Button from "../ui/Button/Button";
 import { Article } from "@/types/article";
 import Image from "next/image";
+import ClearFiltersButton from "../ui/Button/ClearFiltersButton";
 
 const ArticlePage = () => {
   const [loading, setLoading] = useState(true);
@@ -148,6 +149,7 @@ const ArticlePage = () => {
                     title="Create"
                   />
                 </div>
+                <ClearFiltersButton />
               </>
             )}
           </div>
