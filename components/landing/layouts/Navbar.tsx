@@ -211,6 +211,23 @@ export const Navbar = () => {
                 {isMobileDropdownOpen && (
                   <div className="mt-2 bg-white shadow-md rounded-md border">
                     <button
+                      onClick={handleClick}
+                      disabled={isLoading}
+                      className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 border-b flex items-center gap-2"
+                    >
+                      {isLoading ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
+                          <span className="text-gray-300">Loading...</span>
+                        </>
+                      ) : (
+                        <>
+                          <LayoutDashboard className="w-5 h-5" />
+                          <span>Dashboard</span>
+                        </>
+                      )}
+                    </button>
+                    <button
                       onClick={handleCartClick}
                       disabled={isCartLoading}
                       className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 border-b flex items-center gap-2"
