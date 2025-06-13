@@ -131,17 +131,23 @@ export default function CartItems({
       </div>
 
       <div className="mt-12 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h2 className="text-xl font-bold">
-          Total: Rp {total.toLocaleString("id-ID")}
-        </h2>
-        <div className="flex items-center space-x-4 md:flex-row flex-col space-y-2 md:space-y-0">
-          <Link href="/produk" className="text-gray-700 underline">
-            Kembali ke produk
+        <div className="w-full sm:w-auto">
+          <h2 className="text-lg sm:text-xl font-semibold sm:font-bold text-gray-800 mb-2 sm:mb-0">
+            Total: Rp {total.toLocaleString("id-ID")}
+          </h2>
+        </div>
+
+        <div className="flex flex-col w-full sm:flex-row sm:justify-end sm:items-center gap-2">
+          <Link
+            href="/produk"
+            className="text-sm text-gray-600 underline text-center sm:text-right"
+          >
+            ← Kembali ke produk
           </Link>
 
           <button
             onClick={() => setShowModal(true)}
-            className="bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 flex items-center gap-2 transition"
+            className="bg-indigo-500 text-white w-full sm:w-auto px-4 py-2 rounded-lg hover:bg-indigo-700 flex justify-center items-center gap-2 transition"
           >
             <ShoppingBag />
             Checkout
