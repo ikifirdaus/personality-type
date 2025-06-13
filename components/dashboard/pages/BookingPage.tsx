@@ -233,7 +233,7 @@ const BookingPage = () => {
                     no: index + 1,
                     name: item.user?.name || "-",
                     productName: item.productName,
-                    createdAt: new Date(item.createdAt).toLocaleDateString(),
+                    createdAt: item.createdAt,
                     action: (
                       <Link
                         href={`/atur-jadwal?transactionId=${item.transactionId}&productId=${item.productId}`}

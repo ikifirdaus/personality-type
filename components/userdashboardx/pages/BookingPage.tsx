@@ -187,7 +187,7 @@ const BookingPage = () => {
                   data={notScheduledProducts.map((item, index) => ({
                     no: index + 1,
                     productName: item.productName,
-                    createdAt: new Date(item.createdAt).toLocaleDateString(),
+                    createdAt: item.createdAt,
                     action: (
                       <Link
                         href={`/atur-jadwal?transactionId=${item.transactionId}&productId=${item.productId}`}
