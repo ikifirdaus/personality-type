@@ -1,5 +1,5 @@
 import SkeletonAdminLayout from "@/components/dashboard/ui/Skeleton/SkeletonAdminLayout";
-import BookingPage from "@/components/userDashboard/pages/BookingPage";
+import BookingPage from "@/components/userdashboardx/pages/BookingPage";
 import { Suspense } from "react";
 
 export default function Page() {
