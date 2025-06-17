@@ -152,7 +152,7 @@ export const Navbar = () => {
                     {isLoggingOut ? (
                       <>
                         <div className="w-4 h-4 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
-                        <div className="text-gray-300">Loading...</div>
+                        <div className="text-gray-300">Logging out...</div>
                       </>
                     ) : (
                       <>
@@ -258,7 +258,7 @@ export const Navbar = () => {
                       {isLoggingOut ? (
                         <>
                           <div className="w-4 h-4 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
-                          <div className="text-gray-300">Loading...</div>
+                          <div className="text-gray-300">Logging out...</div>
                         </>
                       ) : (
                         <>

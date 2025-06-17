@@ -1,6 +1,4 @@
 import {
-  // BetweenVerticalStart,
-  // ClipboardList,
   LayoutDashboard,
   ListChecks,
   ListCollapse,
@@ -20,16 +18,6 @@ const Sidebar = () => {
     },
     { icon: ListChecks, label: "Riwayat Transaksi", path: "/admin/transaksi" },
     { icon: ListCollapse, label: "Riwayat Booking", path: "/admin/booking" },
-    // {
-    //   icon: BetweenVerticalStart,
-    //   label: "Cognitive",
-    //   path: "/admin/cognitive",
-    // },
-    // {
-    //   icon: ClipboardList,
-    //   label: "Question",
-    //   path: "/admin/question",
-    // },
     { icon: ShoppingBag, label: "Product", path: "/admin/product" },
     { icon: Newspaper, label: "Article", path: "/admin/article" },
     { icon: Users, label: "Users/Staff", path: "/admin/user" },
