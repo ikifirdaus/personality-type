@@ -1,7 +1,7 @@
 // components/landing/modals/LoginReminderModal.tsx
 "use client";
 
-import { FileInput } from "lucide-react";
+import { EyeClosed, FileInput } from "lucide-react";
 // import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Button from "../Button/Button";
@@ -30,9 +30,9 @@ export default function LoginReminderModal({ open, onClose }: Props) {
         {/* Close button (X) */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+          className="absolute top-2 right-2 hover:bg-red-700 text-sm bg-red-500/60 rounded px-3 py-1 p-4 shadow-lg text-white"
         >
-          ×
+          &times;
         </button>
 
         <h1 className="text-2xl font-semibold text-gray-800 mb-4">
@@ -47,9 +47,10 @@ export default function LoginReminderModal({ open, onClose }: Props) {
         <div className="mt-5 flex justify-end gap-2">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-gray-600 hover:text-gray-800"
+            className="px-4 py-2 text-gray-600 hover:text-gray-800 flex gap-2 items-center"
           >
-            Nanti Aja
+            Nanti saja
+            <EyeClosed />
           </button>
           <Button
             className=""
