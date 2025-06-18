@@ -22,6 +22,8 @@ const BookingPage = () => {
   const [totalItems, setTotalItems] = useState(0);
   const searchParams = useSearchParams();
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSchedule, setSelectedSchedule] = useState<Schedule | null>(
     null
@@ -37,19 +39,27 @@ const BookingPage = () => {
   const handleSubmit = async () => {
     if (!selectedSchedule) return;
 
-    const response = await fetch(`/api/schedule/${selectedSchedule.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ status: newStatus }),
-    });
+    setIsSubmitting(true); // Start loading
 
-    if (response.ok) {
-      setIsModalOpen(false);
-      location.reload(); // Atau bisa fetch ulang jadwal
-    } else {
-      console.error("Gagal update status");
+    try {
+      const response = await fetch(`/api/schedule/${selectedSchedule.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      if (response.ok) {
+        setIsModalOpen(false);
+        location.reload(); // Atau fetch ulang data
+      } else {
+        console.error("Gagal update status");
+      }
+    } catch (error) {
+      console.error("Terjadi kesalahan:", error);
+    } finally {
+      setIsSubmitting(false); // Stop loading
     }
   };
 
@@ -268,9 +278,12 @@ const BookingPage = () => {
             </select>
             <button
               onClick={handleSubmit}
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-opacity-90"
+              disabled={isSubmitting}
+              className={`bg-blue-500 text-white px-4 py-2 rounded hover:bg-opacity-90 ${
+                isSubmitting ? "opacity-60 cursor-not-allowed" : ""
+              }`}
             >
-              Simpan
+              {isSubmitting ? "Loading..." : "Simpan"}
             </button>
           </div>
         </Modal>

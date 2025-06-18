@@ -27,7 +27,7 @@ const ClearFiltersButton = () => {
   return (
     <button
       onClick={handleClear}
-      className="text-sm font-medium text-slate-500 hover:bg-primary hover:bg-slate-200 hover:text-white flex items-center justify-center border md:w-28 h-9 rounded w-full"
+      className="text-sm font-medium text-slate-500 hover:bg-primary hover:bg-slate-200 hover:text-white flex items-center justify-center border md:w-36 h-9 rounded w-full px-4"
     >
       Hapus Search
     </button>
