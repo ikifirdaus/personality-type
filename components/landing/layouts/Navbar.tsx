@@ -28,12 +28,18 @@ export const Navbar = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const { data: cartData } = useSWR("/api/landing/cart", fetcher, {
-    refreshInterval: 5000,
-  });
+  const { data: session, status } = useSession();
+
+  const { data: cartData } = useSWR(
+    status === "authenticated" ? "/api/landing/cart" : null,
+    fetcher,
+    {
+      refreshInterval: 3000,
+    }
+  );
+
   const cartCount = cartData?.count || 0;
 
-  const { data: session } = useSession();
   const router = useRouter();
 
   useEffect(() => {

@@ -1,9 +1,9 @@
 "use client";
 
-// import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { ChevronRight, ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 interface BreadcrumbItem {
   text: string;
@@ -18,9 +18,15 @@ interface TitleBreadcrumbProps {
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Breadcrumb({ title, items }: TitleBreadcrumbProps) {
-  const { data } = useSWR("/api/landing/cart", fetcher, {
-    refreshInterval: 3000, // refresh otomatis setiap 5 detik
-  });
+  const { status } = useSession();
+
+  const { data } = useSWR(
+    status === "authenticated" ? "/api/landing/cart" : null,
+    fetcher,
+    {
+      refreshInterval: 3000, // refresh otomatis setiap 3 detik
+    }
+  );
 
   const cartCount = data?.count || 0;
 
